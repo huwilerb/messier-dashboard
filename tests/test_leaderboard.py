@@ -55,6 +55,23 @@ def test_leaderboard_excludes_admin_groupe(admin_client, db_session):
     assert ADMIN_NOM not in resp.text
 
 
+def test_catalogue_accessible_without_auth(client):
+    resp = client.get("/objets")
+    assert resp.status_code == 200
+
+
+def test_catalogue_lists_all_110_objects(client):
+    resp = client.get("/objets")
+    assert resp.text.count('href="/objet/M') == 110
+    assert "M1" in resp.text
+    assert "M110" in resp.text
+
+
+def test_catalogue_links_to_objet_detail(client):
+    resp = client.get("/objets")
+    assert 'href="/objet/M42"' in resp.text
+
+
 def test_objet_detail_returns_200_with_type_and_constellation(client):
     resp = client.get("/objet/M42")
     assert resp.status_code == 200

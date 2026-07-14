@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Catalogue Messier &mdash; Messier Marathon{% endblock %}
+{% block content %}
+<h1>Catalogue Messier</h1>
+<p class="subtitle">Les 110 objets du défi. Cliquez sur un objet pour voir quels groupes l'ont déjà observé cette année.</p>
+
+<div class="object-grid">
+  {% for objet in objets %}
+    <a class="object-card catalogue-card" href="/objet/{{ objet.designation }}">
+      <div class="object-card-header">
+        <span class="object-designation">{{ objet.designation }}</span>
+        <span class="object-type">{{ objet.type_objet }}</span>
+      </div>
+      <h3 class="object-name">{{ objet.nom_commun or objet.designation }}</h3>
+      <p class="object-constellation">{{ objet.constellation }}</p>
+      <span class="object-link">Voir la fiche &rarr;</span>
+    </a>
+  {% endfor %}
+</div>
+{% endblock %}

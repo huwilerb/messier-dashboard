@@ -1,4 +1,4 @@
-"""Public leaderboard and per-object detail pages (no auth required).
+"""Public leaderboard, catalogue, and per-object detail pages (no auth required).
 
 Context variables passed to templates:
 
@@ -8,6 +8,11 @@ Context variables passed to templates:
                    objects captured), "percent" (float, count/110*100,
                    1 decimal place)
     total_objets -> int, total number of Messier objects (110)
+
+- catalogue.html:
+    objets -> list[ObjetMessier], all 110, sorted by numeric designation
+              (M1, M2, ... M110). No per-group capture status: this page
+              is public and not scoped to any logged-in group.
 
 - objet_detail.html:
     objet         -> ObjetMessier
@@ -27,9 +32,23 @@ from sqlmodel import Session, select
 
 from app.database import get_session
 from app.models import Groupe, ObjetMessier, Observation
+from app.routers.observations import _all_objets
 
 router = APIRouter(tags=["leaderboard"])
 templates = Jinja2Templates(directory="app/templates")
+
+
+@router.get("/objets")
+def catalogue_view(
+    request: Request,
+    session: Annotated[Session, Depends(get_session)],
+):
+    objets = _all_objets(session)
+    return templates.TemplateResponse(
+        request,
+        "catalogue.html",
+        {"objets": objets},
+    )
 
 
 @router.get("/leaderboard")

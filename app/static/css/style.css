@@ -512,6 +512,20 @@ tbody tr:hover {
   color: var(--accent);
 }
 
+.catalogue-card {
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.catalogue-card:hover {
+  border-color: var(--accent-2);
+  text-decoration: none;
+}
+
+.catalogue-card .object-link {
+  margin-top: auto;
+}
+
 /* ---------- Objet detail ---------- */
 
 .back-link {

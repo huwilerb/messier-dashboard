@@ -31,7 +31,16 @@ from datetime import date
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile, status
+from fastapi import (
+    APIRouter,
+    Depends,
+    File,
+    Form,
+    HTTPException,
+    Request,
+    UploadFile,
+    status,
+)
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
@@ -56,14 +65,18 @@ def _all_objets(session: Session) -> list[ObjetMessier]:
     return sorted(objets, key=_designation_sort_key)
 
 
-def _observations_for_groupe(session: Session, groupe_id: int) -> dict[int, Observation]:
+def _observations_for_groupe(
+    session: Session, groupe_id: int
+) -> dict[int, Observation]:
     observations = session.exec(
         select(Observation).where(Observation.groupe_id == groupe_id)
     ).all()
     return {obs.objet_id: obs for obs in observations}
 
 
-def _progress(observations_by_objet_id: dict[int, Observation], total_objets: int) -> tuple[int, float]:
+def _progress(
+    observations_by_objet_id: dict[int, Observation], total_objets: int
+) -> tuple[int, float]:
     count = len(observations_by_objet_id)
     percent = round((count / total_objets) * 100, 1) if total_objets else 0.0
     return count, percent
@@ -103,7 +116,9 @@ def _save_photo(photo: UploadFile, contents: bytes) -> str:
 
     original_suffix = Path(photo.filename or "").suffix.lower()
     # Keep only a small allowlist-ish suffix; fall back to .jpg if unusual/absent.
-    safe_suffix = original_suffix if original_suffix and len(original_suffix) <= 10 else ".jpg"
+    safe_suffix = (
+        original_suffix if original_suffix and len(original_suffix) <= 10 else ".jpg"
+    )
     filename = f"{uuid.uuid4().hex}{safe_suffix}"
 
     (upload_dir / filename).write_bytes(contents)
@@ -125,7 +140,9 @@ async def add_observation(
 
     objet = session.get(ObjetMessier, objet_id)
     if objet is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Objet inconnu")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Objet inconnu"
+        )
 
     photo_path: str | None = None
     error: str | None = None
@@ -183,7 +200,9 @@ async def add_observation(
 
     observations_by_objet_id = _observations_for_groupe(session, groupe.id)
     total_objets = session.exec(select(ObjetMessier)).all()
-    progress_count, progress_percent = _progress(observations_by_objet_id, len(total_objets))
+    progress_count, progress_percent = _progress(
+        observations_by_objet_id, len(total_objets)
+    )
 
     return templates.TemplateResponse(
         request,
@@ -208,9 +227,14 @@ def delete_observation(
 ):
     observation = session.get(Observation, observation_id)
     if observation is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Observation inconnue")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Observation inconnue"
+        )
     if observation.groupe_id != groupe.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Vous n'êtes pas propriétaire de cette observation")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Vous n'êtes pas propriétaire de cette observation",
+        )
 
     objet = session.get(ObjetMessier, observation.objet_id)
 
@@ -228,7 +252,9 @@ def delete_observation(
 
     observations_by_objet_id = _observations_for_groupe(session, groupe.id)
     total_objets = session.exec(select(ObjetMessier)).all()
-    progress_count, progress_percent = _progress(observations_by_objet_id, len(total_objets))
+    progress_count, progress_percent = _progress(
+        observations_by_objet_id, len(total_objets)
+    )
 
     return templates.TemplateResponse(
         request,

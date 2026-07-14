@@ -10,12 +10,12 @@ from app.config import settings
 # SQLite needs this connect_arg when used from multiple threads (FastAPI's
 # default threadpool for sync endpoints).
 _connect_args = (
-    {"check_same_thread": False}
-    if settings.DATABASE_URL.startswith("sqlite")
-    else {}
+    {"check_same_thread": False} if settings.DATABASE_URL.startswith("sqlite") else {}
 )
 
-engine = create_engine(settings.DATABASE_URL, echo=settings.DEBUG, connect_args=_connect_args)
+engine = create_engine(
+    settings.DATABASE_URL, echo=settings.DEBUG, connect_args=_connect_args
+)
 
 
 def _ensure_sqlite_parent_dir() -> None:

@@ -66,9 +66,14 @@ def create_groupe(
 ):
     existing = session.exec(select(Groupe).where(Groupe.nom == nom)).first()
     if existing is not None:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Ce nom de groupe existe déjà")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Ce nom de groupe existe déjà",
+        )
 
-    new_groupe = Groupe(nom=nom, password_hash=hash_password(password), is_admin=is_admin)
+    new_groupe = Groupe(
+        nom=nom, password_hash=hash_password(password), is_admin=is_admin
+    )
     session.add(new_groupe)
     session.commit()
 
@@ -84,7 +89,9 @@ def reset_password(
 ):
     target = session.get(Groupe, groupe_id)
     if target is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Groupe inconnu")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Groupe inconnu"
+        )
 
     target.password_hash = hash_password(new_password)
     session.add(target)
@@ -100,11 +107,16 @@ def delete_groupe(
     admin: Annotated[Groupe, Depends(require_admin)],
 ):
     if groupe_id == admin.id:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Impossible de supprimer votre propre groupe")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Impossible de supprimer votre propre groupe",
+        )
 
     target = session.get(Groupe, groupe_id)
     if target is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Groupe inconnu")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Groupe inconnu"
+        )
 
     observations = session.exec(
         select(Observation).where(Observation.groupe_id == groupe_id)

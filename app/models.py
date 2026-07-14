@@ -47,7 +47,9 @@ class Observation(SQLModel, table=True):
     date_observation: date = Field(index=True)
     type_capture: str = Field(max_length=20)  # "photo" or "visuel"
     notes: str | None = Field(default=None, max_length=2000)
-    photo_path: str | None = Field(default=None, max_length=500)  # relative path under UPLOAD_DIR
+    photo_path: str | None = Field(
+        default=None, max_length=500
+    )  # relative path under UPLOAD_DIR
     date_saisie: datetime = Field(default_factory=datetime.utcnow)
 
     # Business rule (see app.config.Settings.UNIQUE_OBSERVATION_PER_OBJECT):

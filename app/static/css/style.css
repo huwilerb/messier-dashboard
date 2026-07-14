@@ -552,6 +552,31 @@ tbody tr:hover {
   opacity: 0.8;
 }
 
+.visibility-strip {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2px;
+  margin: 0.2rem 0;
+}
+
+.month-cell {
+  flex: 1;
+  text-align: center;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.15rem 0;
+}
+
+.month-visible {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
 .catalogue-card {
   text-decoration: none;
   transition: border-color 0.15s ease;

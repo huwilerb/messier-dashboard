@@ -1,16 +1,30 @@
 {% extends "base.html" %}
+{% import "partials/_visibility_strip.html" as visibility %}
 {% block title %}Catalogue Messier &mdash; Messier Marathon{% endblock %}
 {% block content %}
+{% macro cat_link(type_val, saison_val) %}/objets{% if type_val or saison_val %}?{% endif %}{% if type_val %}type_objet={{ type_val | urlencode }}{% endif %}{% if type_val and saison_val %}&{% endif %}{% if saison_val %}saison={{ saison_val | urlencode }}{% endif %}{% endmacro %}
+
 <h1>Catalogue Messier</h1>
 <p class="subtitle">Les {{ total_objets }} objets du défi. Cliquez sur un objet pour voir quels groupes l'ont déjà observé cette année.</p>
 
 <div class="filter-chips">
-  <a href="/objets" class="chip{% if not selected_type %} chip-active{% endif %}">
+  <a href="{{ cat_link(None, selected_saison) }}" class="chip{% if not selected_type %} chip-active{% endif %}">
     Tous <span class="chip-count">{{ total_objets }}</span>
   </a>
   {% for t in types %}
-    <a href="/objets?type_objet={{ t | urlencode }}" class="chip{% if t == selected_type %} chip-active{% endif %}">
+    <a href="{{ cat_link(t, selected_saison) }}" class="chip{% if t == selected_type %} chip-active{% endif %}">
       {{ t }} <span class="chip-count">{{ type_counts[t] }}</span>
+    </a>
+  {% endfor %}
+</div>
+
+<div class="filter-chips">
+  <a href="{{ cat_link(selected_type, None) }}" class="chip{% if not selected_saison %} chip-active{% endif %}">
+    Toutes saisons
+  </a>
+  {% for s in seasons %}
+    <a href="{{ cat_link(selected_type, s) }}" class="chip{% if s == selected_saison %} chip-active{% endif %}">
+      {{ season_labels[s] }} <span class="chip-count">{{ season_counts[s] }}</span>
     </a>
   {% endfor %}
 </div>
@@ -25,11 +39,12 @@
       </div>
       <h3 class="object-name">{{ objet.nom_commun or objet.designation }}</h3>
       <p class="object-constellation">{{ objet.constellation }}</p>
+      {{ visibility.visibility_strip(objet.mois_visibles_list) }}
       <span class="object-link">Voir la fiche &rarr;</span>
     </a>
   {% endfor %}
 </div>
 {% else %}
-<p>Aucun objet de ce type.</p>
+<p>Aucun objet ne correspond à ces filtres.</p>
 {% endif %}
 {% endblock %}

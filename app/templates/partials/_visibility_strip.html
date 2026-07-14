@@ -1,0 +1,12 @@
+{# Shared macro rendering a compact 12-month visibility strip for an
+   ObjetMessier, highlighting the months it's usably placed in the evening
+   sky from Fribourg, Switzerland. Used by catalogue.html, the object_card
+   macro (dashboard), and objet_detail.html so the visual stays consistent. #}
+{% macro visibility_strip(mois_visibles_list) %}
+{% set month_labels = ["Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"] %}
+<div class="visibility-strip" title="Mois de visibilité depuis Fribourg (Suisse)">
+  {% for i in range(1, 13) %}
+    <span class="month-cell{% if i in mois_visibles_list %} month-visible{% endif %}">{{ month_labels[i - 1] }}</span>
+  {% endfor %}
+</div>
+{% endmacro %}

@@ -10,9 +10,18 @@ Context variables passed to templates:
     total_objets -> int, total number of Messier objects (110)
 
 - catalogue.html:
-    objets -> list[ObjetMessier], all 110, sorted by numeric designation
-              (M1, M2, ... M110). No per-group capture status: this page
-              is public and not scoped to any logged-in group.
+    objets        -> list[ObjetMessier], sorted by numeric designation
+                      (M1, M2, ... M110), filtered to `selected_type` if
+                      set. No per-group capture status: this page is
+                      public and not scoped to any logged-in group.
+    types          -> list[str], distinct type_objet values present in
+                       the catalog, sorted alphabetically.
+    type_counts    -> dict[str, int], number of objects per type (over
+                       the full unfiltered catalog, for the filter UI).
+    selected_type  -> str | None, the type_objet currently filtered to
+                       (None means "all").
+    total_objets   -> int, total number of Messier objects (110),
+                       unaffected by the filter.
 
 - objet_detail.html:
     objet         -> ObjetMessier
@@ -42,12 +51,32 @@ templates = Jinja2Templates(directory="app/templates")
 def catalogue_view(
     request: Request,
     session: Annotated[Session, Depends(get_session)],
+    type_objet: str | None = None,
 ):
-    objets = _all_objets(session)
+    all_objets = _all_objets(session)
+
+    type_counts: dict[str, int] = {}
+    for objet in all_objets:
+        type_counts[objet.type_objet] = type_counts.get(objet.type_objet, 0) + 1
+    types = sorted(type_counts)
+
+    selected_type = type_objet if type_objet in type_counts else None
+    objets = (
+        [o for o in all_objets if o.type_objet == selected_type]
+        if selected_type
+        else all_objets
+    )
+
     return templates.TemplateResponse(
         request,
         "catalogue.html",
-        {"objets": objets},
+        {
+            "objets": objets,
+            "types": types,
+            "type_counts": type_counts,
+            "selected_type": selected_type,
+            "total_objets": len(all_objets),
+        },
     )
 
 

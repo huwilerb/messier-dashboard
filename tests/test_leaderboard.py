@@ -72,6 +72,25 @@ def test_catalogue_links_to_objet_detail(client):
     assert 'href="/objet/M42"' in resp.text
 
 
+def test_catalogue_filters_by_type(client):
+    resp = client.get("/objets", params={"type_objet": "Galaxie"})
+    assert resp.status_code == 200
+    assert "M31" in resp.text  # Andromède, a Galaxie
+    assert "M42" not in resp.text  # Orion, a Nébuleuse, must be filtered out
+
+
+def test_catalogue_unknown_type_falls_back_to_all(client):
+    resp = client.get("/objets", params={"type_objet": "Not A Real Type"})
+    assert resp.status_code == 200
+    assert resp.text.count('href="/objet/M') == 110
+
+
+def test_catalogue_shows_filter_chips_with_counts(client):
+    resp = client.get("/objets")
+    assert "Galaxie" in resp.text
+    assert "Nébuleuse" in resp.text
+
+
 def test_objet_detail_returns_200_with_type_and_constellation(client):
     resp = client.get("/objet/M42")
     assert resp.status_code == 200

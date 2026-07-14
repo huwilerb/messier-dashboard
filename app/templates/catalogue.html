@@ -2,8 +2,20 @@
 {% block title %}Catalogue Messier &mdash; Messier Marathon{% endblock %}
 {% block content %}
 <h1>Catalogue Messier</h1>
-<p class="subtitle">Les 110 objets du défi. Cliquez sur un objet pour voir quels groupes l'ont déjà observé cette année.</p>
+<p class="subtitle">Les {{ total_objets }} objets du défi. Cliquez sur un objet pour voir quels groupes l'ont déjà observé cette année.</p>
 
+<div class="filter-chips">
+  <a href="/objets" class="chip{% if not selected_type %} chip-active{% endif %}">
+    Tous <span class="chip-count">{{ total_objets }}</span>
+  </a>
+  {% for t in types %}
+    <a href="/objets?type_objet={{ t | urlencode }}" class="chip{% if t == selected_type %} chip-active{% endif %}">
+      {{ t }} <span class="chip-count">{{ type_counts[t] }}</span>
+    </a>
+  {% endfor %}
+</div>
+
+{% if objets %}
 <div class="object-grid">
   {% for objet in objets %}
     <a class="object-card catalogue-card" href="/objet/{{ objet.designation }}">
@@ -17,4 +29,7 @@
     </a>
   {% endfor %}
 </div>
+{% else %}
+<p>Aucun objet de ce type.</p>
+{% endif %}
 {% endblock %}

@@ -1,0 +1,1 @@
+"""Messier Marathon application package."""

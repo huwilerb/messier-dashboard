@@ -69,7 +69,9 @@ def objet_detail(
         select(ObjetMessier).where(ObjetMessier.designation == designation)
     ).first()
     if objet is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Objet inconnu")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Objet inconnu"
+        )
 
     observations = session.exec(
         select(Observation).where(Observation.objet_id == objet.id)

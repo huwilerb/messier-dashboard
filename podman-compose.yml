@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      containerfile: Containerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=sqlite:///data/messier.db
+      # Absolute path required in-container (see Containerfile note): the app package
+      # lives at /app/app, so the relative default in .env.example would resolve wrong.
+      - UPLOAD_DIR=/app/static/uploads
+      - MAX_UPLOAD_SIZE_MB=${MAX_UPLOAD_SIZE_MB:-10}
+      - UNIQUE_OBSERVATION_PER_OBJECT=${UNIQUE_OBSERVATION_PER_OBJECT:-true}
+    volumes:
+      # Named volumes for both the SQLite DB and uploads — Podman assigns correct
+      # rootless UID/GID to named volumes automatically, unlike a host bind mount
+      # (a plain `./uploads:...` bind mount is owned by the host user and is NOT
+      # writable by appuser (uid 1000) inside the container; verified during build).
+      - messier-data:/app/data
+      - messier-uploads:/app/static/uploads
+    restart: unless-stopped
+    # Alternative if host-visible uploads are required instead of a named volume:
+    # preserve host UID:GID in-container so a `./uploads:/app/static/uploads:Z`
+    # bind mount becomes writable by appuser.
+    # user: "1000:1000"
+    # userns_mode: keep-id
+
+volumes:
+  messier-data:
+    driver: local
+  messier-uploads:
+    driver: local

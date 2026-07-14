@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard &mdash; Messier Marathon{% endblock %}
+{% block content %}
+<h1>Classement des groupes</h1>
+<p class="subtitle">Progression sur {{ total_objets }} objets du catalogue Messier</p>
+
+<div class="table-wrap">
+  <table class="leaderboard-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Groupe</th>
+        <th>Objets capturés</th>
+        <th>Progression</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in leaderboard %}
+        {% set rank = loop.index %}
+        {% include "partials/leaderboard_row.html" %}
+      {% else %}
+        <tr><td colspan="4">Aucun groupe pour le moment.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

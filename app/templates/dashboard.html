@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% import "partials/_object_card.html" as cards %}
+{% import "partials/_progress_bar.html" as progress %}
+{% block title %}Dashboard &mdash; {{ groupe.nom }}{% endblock %}
+{% block content %}
+<h1>Bonjour, {{ groupe.nom }}</h1>
+
+{{ progress.progress_bar(progress_count, progress_percent) }}
+
+<div class="object-grid">
+  {% for objet in objets %}
+    {{ cards.object_card(objet, observations_by_objet_id.get(objet.id), groupe) }}
+  {% endfor %}
+</div>
+{% endblock %}

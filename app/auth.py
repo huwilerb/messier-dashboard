@@ -30,7 +30,9 @@ class NotAuthenticated(HTTPException):
     """
 
     def __init__(self) -> None:
-        super().__init__(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+        super().__init__(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated"
+        )
 
 
 def get_current_groupe(
@@ -72,5 +74,7 @@ def require_admin(
 ) -> Groupe:
     """Dependency ensuring the current groupe is an admin."""
     if not groupe.is_admin:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin access required")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Admin access required"
+        )
     return groupe

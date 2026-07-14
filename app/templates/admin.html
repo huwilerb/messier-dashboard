@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Admin &mdash; Messier Marathon{% endblock %}
+{% block content %}
+<h1>Administration</h1>
+
+<section class="admin-section">
+  <h2>Créer un groupe</h2>
+  <form method="post" action="/admin/groupes/create" class="inline-form">
+    <label class="field-label">Nom
+      <input type="text" name="nom" required>
+    </label>
+    <label class="field-label">Mot de passe
+      <input type="password" name="password" required>
+    </label>
+    <label class="checkbox-label">
+      <input type="checkbox" name="is_admin" value="true"> Admin
+    </label>
+    <button type="submit" class="btn btn-primary">Créer</button>
+  </form>
+</section>
+
+<section class="admin-section">
+  <h2>Groupes ({{ groupes|length }})</h2>
+  <div class="table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Admin</th>
+          <th>Créé le</th>
+          <th>Observations</th>
+          <th>Réinitialiser mot de passe</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for g in groupes %}
+        <tr>
+          <td>{{ g.nom }}</td>
+          <td>{{ "Oui" if g.is_admin else "Non" }}</td>
+          <td>{{ g.created_at.strftime("%Y-%m-%d") if g.created_at else "" }}</td>
+          <td>{{ g.observations_count }}</td>
+          <td>
+            <form method="post" action="/admin/groupes/{{ g.id }}/reset-password" class="inline-form small">
+              <input type="password" name="new_password" placeholder="Nouveau mot de passe" required>
+              <button type="submit" class="btn btn-secondary btn-small">Réinitialiser</button>
+            </form>
+          </td>
+          <td>
+            <a href="/admin/groupes/{{ g.id }}/delete"
+               class="btn btn-delete btn-small"
+               onclick="return confirm('Supprimer le groupe « {{ g.nom }} » et toutes ses observations ?');">
+              Supprimer
+            </a>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">Aucun groupe.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

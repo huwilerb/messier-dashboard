@@ -1,0 +1,8 @@
+{# HTMX fragment returned by POST /observations/add and GET
+   /observations/{id}/delete. Renders just the one object-card that
+   should replace itself in the dashboard grid (hx-swap="outerHTML"),
+   plus an out-of-band update of the progress counter. #}
+{% import "partials/_object_card.html" as cards %}
+{% import "partials/_progress_bar.html" as progress %}
+{{ cards.object_card(objet, observation, groupe, error) }}
+{{ progress.progress_bar(progress_count, progress_percent, oob=True) }}

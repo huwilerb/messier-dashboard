@@ -1,0 +1,15 @@
+{# Single leaderboard row. Included with context inherited (row, rank).
+   Note: Jinja2's special `loop` variable is NOT passed into included
+   templates even though the surrounding context is, so the caller sets
+   an explicit `rank` variable before including this partial. #}
+<tr>
+  <td class="rank-cell">{{ rank }}</td>
+  <td>{{ row.nom }}</td>
+  <td>{{ row.count }} / {{ total_objets }}</td>
+  <td>
+    <div class="progress-track small">
+      <div class="progress-fill" style="width: {{ row.percent }}%;"></div>
+    </div>
+    <span class="percent-label">{{ row.percent }}%</span>
+  </td>
+</tr>

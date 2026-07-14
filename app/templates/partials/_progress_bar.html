@@ -1,0 +1,12 @@
+{# Shared macro rendering the group's progress bar / counter.
+   oob=True marks it for an HTMX out-of-band swap so that adding or
+   deleting a single observation (which only targets one object-card)
+   still refreshes this counter in the same response. #}
+{% macro progress_bar(progress_count, progress_percent, total=110, oob=False) %}
+<div id="progress-bar" class="progress-block"{% if oob %} hx-swap-oob="true"{% endif %}>
+  <p class="progress-label">{{ progress_count }}/{{ total }} capturés — {{ progress_percent }}%</p>
+  <div class="progress-track">
+    <div class="progress-fill" style="width: {{ progress_percent }}%;"></div>
+  </div>
+</div>
+{% endmacro %}

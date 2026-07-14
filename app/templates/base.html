@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Messier Marathon{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="/leaderboard" class="brand">Messier Marathon</a>
+      <div class="nav-links">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/leaderboard">Leaderboard</a>
+        {% if is_admin %}
+          <a href="/admin">Admin</a>
+        {% endif %}
+        {% if request.session.get("groupe_nom") %}
+          <form action="/logout" method="post" class="logout-form">
+            <button type="submit" class="link-button">Déconnexion</button>
+          </form>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>Messier Marathon &mdash; Défi annuel du club d'astronomie</p>
+  </footer>
+</body>
+</html>

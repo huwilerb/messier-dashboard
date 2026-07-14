@@ -1,0 +1,17 @@
+{# Single observation row for objet_detail.html. Included with context
+   inherited (obs). #}
+<tr>
+  <td>{{ obs.groupe_nom }}</td>
+  <td>{{ obs.date_observation }}</td>
+  <td><span class="badge badge-{{ obs.type_capture }}">{{ obs.type_capture }}</span></td>
+  <td>{{ obs.notes or "" }}</td>
+  <td>
+    {% if obs.photo_path %}
+      <a href="/uploads/{{ obs.photo_path }}" target="_blank" rel="noopener">
+        <img src="/uploads/{{ obs.photo_path }}" class="observation-thumb-small" alt="Photo de {{ obs.groupe_nom }}" loading="lazy">
+      </a>
+    {% else %}
+      &mdash;
+    {% endif %}
+  </td>
+</tr>

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}{{ objet.designation }} &mdash; {{ objet.nom_commun or objet.designation }}{% endblock %}
+{% block content %}
+<a href="/leaderboard" class="back-link">&larr; Retour au classement</a>
+
+<div class="objet-header">
+  <h1>{{ objet.designation }} &mdash; {{ objet.nom_commun or "Sans nom commun" }}</h1>
+  <div class="objet-meta">
+    <span class="badge">{{ objet.type_objet }}</span>
+    <span class="badge">{{ objet.constellation }}</span>
+  </div>
+  {% if objet.description %}
+    <p class="objet-description">{{ objet.description }}</p>
+  {% endif %}
+</div>
+
+<h2>Observations ({{ observations|length }})</h2>
+{% if observations %}
+<div class="table-wrap">
+  <table class="observations-table">
+    <thead>
+      <tr>
+        <th>Groupe</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Notes</th>
+        <th>Photo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for obs in observations %}
+        {% include "partials/observation_row.html" %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>Aucune observation enregistrée pour cet objet pour l'instant.</p>
+{% endif %}
+{% endblock %}

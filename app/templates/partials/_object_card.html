@@ -1,0 +1,73 @@
+{# Shared macro rendering a single Messier object card, in either
+   "not yet captured" (form) or "captured" (badge + delete) state.
+   Used by dashboard.html (looped over all 110 objects) and by
+   partials/object_progress.html (the HTMX swap target for a single
+   object), so both stay visually identical. #}
+{% macro object_card(objet, observation, groupe, error=None) %}
+<div class="object-card{% if observation %} is-captured{% endif %}" id="object-card-{{ objet.id }}">
+  <div class="object-card-header">
+    <span class="object-designation">{{ objet.designation }}</span>
+    <span class="object-type">{{ objet.type_objet }}</span>
+  </div>
+
+  <h3 class="object-name">{{ objet.nom_commun or objet.designation }}</h3>
+  <p class="object-constellation">{{ objet.constellation }}</p>
+  <a href="/objet/{{ objet.designation }}" class="object-link">Voir la fiche &rarr;</a>
+
+  {% if error %}
+    <p class="form-error">{{ error }}</p>
+  {% endif %}
+
+  {% if observation %}
+    <div class="captured-badge">
+      <span class="check-icon" aria-hidden="true">&#10003;</span>
+      Capturé <span class="capture-type-tag">{{ observation.type_capture }}</span>
+    </div>
+    <p class="observation-meta">{{ observation.date_observation }}</p>
+    {% if observation.notes %}
+      <p class="observation-notes">{{ observation.notes }}</p>
+    {% endif %}
+    {% if observation.photo_path %}
+      <a href="/uploads/{{ observation.photo_path }}" target="_blank" rel="noopener">
+        <img src="/uploads/{{ observation.photo_path }}" class="observation-thumb" alt="Photo de {{ objet.designation }}" loading="lazy">
+      </a>
+    {% endif %}
+    <a href="/observations/{{ observation.id }}/delete"
+       class="btn btn-delete btn-small"
+       hx-get="/observations/{{ observation.id }}/delete"
+       hx-target="closest .object-card"
+       hx-swap="outerHTML"
+       hx-confirm="Supprimer l'observation de {{ objet.designation }} ?">
+      Supprimer
+    </a>
+  {% else %}
+    <form class="observation-form"
+          hx-post="/observations/add"
+          hx-target="closest .object-card"
+          hx-swap="outerHTML"
+          hx-encoding="multipart/form-data">
+      <input type="hidden" name="objet_id" value="{{ objet.id }}">
+
+      <label class="field-label">Date
+        <input type="date" name="date_observation" required>
+      </label>
+
+      <fieldset class="capture-type-choice">
+        <legend>Type de capture</legend>
+        <label><input type="radio" name="type_capture" value="photo" required> Photo</label>
+        <label><input type="radio" name="type_capture" value="visuel" required> Visuel</label>
+      </fieldset>
+
+      <label class="field-label">Notes
+        <textarea name="notes" rows="2" placeholder="Conditions, instrument, remarques..."></textarea>
+      </label>
+
+      <label class="field-label">Photo
+        <input type="file" name="photo" accept="image/*">
+      </label>
+
+      <button type="submit" class="btn btn-primary btn-small">Enregistrer</button>
+    </form>
+  {% endif %}
+</div>
+{% endmacro %}

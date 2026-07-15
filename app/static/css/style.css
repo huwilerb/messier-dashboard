@@ -500,6 +500,52 @@ fieldset.capture-type-choice label {
   color: var(--ink-muted);
 }
 
+/* ---------- Dashboard controls ---------- */
+
+.dashboard-controls {
+  margin-bottom: 1.1rem;
+}
+
+.toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--sky-line);
+  border-radius: 999px;
+  font-family: var(--font-data);
+  font-size: 0.78rem;
+  color: var(--sky-text);
+  user-select: none;
+}
+
+.toggle-btn:hover {
+  border-color: var(--redlight);
+}
+
+.toggle-input:focus-visible + .toggle-btn {
+  outline: 2px solid var(--redlight-sky);
+  outline-offset: 2px;
+}
+
+.toggle-label-hide {
+  display: none;
+}
+
+.toggle-input:checked + .toggle-btn .toggle-label-show {
+  display: none;
+}
+
+.toggle-input:checked + .toggle-btn .toggle-label-hide {
+  display: inline;
+}
+
+/* Pure CSS show/hide, no JS: the checkbox lives in the document body, so
+   :has() reaches it from anywhere to hide already-captured cards. */
+body:has(#hide-captured:checked) .object-card.is-captured {
+  display: none;
+}
+
 /* ---------- Object grid / log-entry cards ---------- */
 
 .object-grid {

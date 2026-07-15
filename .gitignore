@@ -21,3 +21,6 @@ data/
 # Uploaded photos (persisted via volume in deployment)
 app/static/uploads/*
 !app/static/uploads/.gitkeep
+
+# Claude Code local state (not project content)
+.claude/

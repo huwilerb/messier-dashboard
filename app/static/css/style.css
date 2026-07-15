@@ -452,33 +452,26 @@ fieldset.capture-type-choice label {
 }
 
 .progress-track {
+  display: flex;
+  gap: 2px;
   height: 10px;
-  border-radius: 1px;
-  overflow: hidden;
-  position: relative;
-  /* 20 ticks, each worth 5% — a running tally rather than a smooth bar */
-  background:
-    repeating-linear-gradient(
-      to right,
-      var(--sky-line) 0,
-      var(--sky-line) calc(100% / 20 - 2px),
-      transparent calc(100% / 20 - 2px),
-      transparent calc(100% / 20)
-    );
 }
 
-.progress-fill-tally {
-  display: block;
+/* 20 discrete ticks (each worth 5%) rather than a smooth bar — a running
+   tally. Deliberately not a single filled div with a % background-size
+   pattern: that scales relative to the fill's own (shrinking) width, so
+   its stripes drift out of alignment with the track underneath as the
+   percentage changes. Independent tick elements sidestep that entirely. */
+.progress-tick {
+  flex: 1;
   height: 100%;
-  background:
-    repeating-linear-gradient(
-      to right,
-      var(--redlight) 0,
-      var(--redlight) calc(100% / 20 - 2px),
-      transparent calc(100% / 20 - 2px),
-      transparent calc(100% / 20)
-    );
-  transition: width 0.3s ease;
+  background: var(--sky-line);
+  border-radius: 1px;
+  transition: background-color 0.3s ease;
+}
+
+.progress-tick-filled {
+  background: var(--redlight);
 }
 
 .progress-track.small {
@@ -892,7 +885,7 @@ tbody tr:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .progress-fill-tally,
+  .progress-tick,
   .catalogue-card {
     transition: none;
   }

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% import "partials/_visibility_strip.html" as visibility %}
 {% block title %}{{ objet.designation }} &mdash; {{ objet.nom_commun or objet.designation }}{% endblock %}
 {% block content %}
-<a href="/leaderboard" class="back-link">&larr; Retour au classement</a>
+<a href="/objets" class="back-link">&larr; Retour au catalogue</a>
 
 <div class="objet-header">
   <h1>{{ objet.designation }} &mdash; {{ objet.nom_commun or "Sans nom commun" }}</h1>
@@ -12,6 +13,8 @@
   {% if objet.description %}
     <p class="objet-description">{{ objet.description }}</p>
   {% endif %}
+  <p class="field-label" style="margin-top: 0.75rem;">Visibilité depuis Fribourg</p>
+  {{ visibility.visibility_strip(objet.mois_visibles_list) }}
 </div>
 
 <h2>Observations ({{ observations|length }})</h2>

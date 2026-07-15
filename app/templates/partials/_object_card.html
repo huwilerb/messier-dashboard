@@ -3,6 +3,7 @@
    Used by dashboard.html (looped over all 110 objects) and by
    partials/object_progress.html (the HTMX swap target for a single
    object), so both stay visually identical. #}
+{% import "partials/_visibility_strip.html" as visibility %}
 {% macro object_card(objet, observation, groupe, error=None) %}
 <div class="object-card{% if observation %} is-captured{% endif %}" id="object-card-{{ objet.id }}">
   <div class="object-card-header">
@@ -12,6 +13,7 @@
 
   <h3 class="object-name">{{ objet.nom_commun or objet.designation }}</h3>
   <p class="object-constellation">{{ objet.constellation }}</p>
+  {{ visibility.visibility_strip(objet.mois_visibles_list) }}
   <a href="/objet/{{ objet.designation }}" class="object-link">Voir la fiche &rarr;</a>
 
   {% if error %}

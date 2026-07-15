@@ -512,6 +512,85 @@ tbody tr:hover {
   color: var(--accent);
 }
 
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.chip:hover {
+  border-color: var(--accent-2);
+  text-decoration: none;
+}
+
+.chip-active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--success-bg);
+}
+
+.chip-count {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.chip-active .chip-count {
+  color: inherit;
+  opacity: 0.8;
+}
+
+.visibility-strip {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2px;
+  margin: 0.2rem 0;
+}
+
+.month-cell {
+  flex: 1;
+  text-align: center;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.15rem 0;
+}
+
+.month-visible {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.catalogue-card {
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.catalogue-card:hover {
+  border-color: var(--accent-2);
+  text-decoration: none;
+}
+
+.catalogue-card .object-link {
+  margin-top: auto;
+}
+
 /* ---------- Objet detail ---------- */
 
 .back-link {

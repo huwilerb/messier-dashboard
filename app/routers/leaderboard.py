@@ -1,4 +1,4 @@
-"""Public leaderboard and per-object detail pages (no auth required).
+"""Public leaderboard, catalogue, and per-object detail pages (no auth required).
 
 Context variables passed to templates:
 
@@ -8,6 +8,28 @@ Context variables passed to templates:
                    objects captured), "percent" (float, count/110*100,
                    1 decimal place)
     total_objets -> int, total number of Messier objects (110)
+
+- catalogue.html:
+    objets          -> list[ObjetMessier], sorted by numeric designation
+                        (M1, M2, ... M110), filtered to `selected_type`
+                        and/or `selected_saison` if set. No per-group
+                        capture status: this page is public and not
+                        scoped to any logged-in group.
+    types            -> list[str], distinct type_objet values present in
+                         the catalog, sorted alphabetically.
+    type_counts      -> dict[str, int], number of objects per type (over
+                         the full unfiltered catalog, for the filter UI).
+    selected_type    -> str | None, the type_objet currently filtered to
+                         (None means "all").
+    seasons          -> list[str], season keys in calendar order:
+                         "hiver", "printemps", "ete", "automne".
+    season_labels    -> dict[str, str], season key -> display label.
+    season_counts    -> dict[str, int], number of objects visible at some
+                         point during each season (over the full
+                         unfiltered catalog).
+    selected_saison  -> str | None, the season currently filtered to.
+    total_objets     -> int, total number of Messier objects (110),
+                         unaffected by the filter.
 
 - objet_detail.html:
     objet         -> ObjetMessier
@@ -27,9 +49,71 @@ from sqlmodel import Session, select
 
 from app.database import get_session
 from app.models import Groupe, ObjetMessier, Observation
+from app.routers.observations import _all_objets
 
 router = APIRouter(tags=["leaderboard"])
 templates = Jinja2Templates(directory="app/templates")
+
+# Calendar-order season -> months, using standard meteorological seasons.
+SEASON_MONTHS: dict[str, set[int]] = {
+    "hiver": {12, 1, 2},
+    "printemps": {3, 4, 5},
+    "ete": {6, 7, 8},
+    "automne": {9, 10, 11},
+}
+SEASON_LABELS: dict[str, str] = {
+    "hiver": "Hiver",
+    "printemps": "Printemps",
+    "ete": "Été",
+    "automne": "Automne",
+}
+
+
+@router.get("/objets")
+def catalogue_view(
+    request: Request,
+    session: Annotated[Session, Depends(get_session)],
+    type_objet: str | None = None,
+    saison: str | None = None,
+):
+    all_objets = _all_objets(session)
+
+    type_counts: dict[str, int] = {}
+    for objet in all_objets:
+        type_counts[objet.type_objet] = type_counts.get(objet.type_objet, 0) + 1
+    types = sorted(type_counts)
+
+    season_counts: dict[str, int] = {}
+    for season, months in SEASON_MONTHS.items():
+        season_counts[season] = sum(
+            1 for o in all_objets if months & set(o.mois_visibles_list)
+        )
+
+    selected_type = type_objet if type_objet in type_counts else None
+    selected_saison = saison if saison in SEASON_MONTHS else None
+
+    objets = all_objets
+    if selected_type:
+        objets = [o for o in objets if o.type_objet == selected_type]
+    if selected_saison:
+        season_months = SEASON_MONTHS[selected_saison]
+        objets = [o for o in objets if season_months & set(o.mois_visibles_list)]
+
+    return templates.TemplateResponse(
+        request,
+        "catalogue.html",
+        {
+            "objets": objets,
+            "types": types,
+            "type_counts": type_counts,
+            "selected_type": selected_type,
+            "seasons": list(SEASON_MONTHS),
+            "season_labels": SEASON_LABELS,
+            "season_counts": season_counts,
+            "selected_saison": selected_saison,
+            "total_objets": len(all_objets),
+        },
+    )
 
 
 @router.get("/leaderboard")

@@ -55,6 +55,76 @@ def test_leaderboard_excludes_admin_groupe(admin_client, db_session):
     assert ADMIN_NOM not in resp.text
 
 
+def test_catalogue_accessible_without_auth(client):
+    resp = client.get("/objets")
+    assert resp.status_code == 200
+
+
+def test_catalogue_lists_all_110_objects(client):
+    resp = client.get("/objets")
+    assert resp.text.count('href="/objet/M') == 110
+    assert "M1" in resp.text
+    assert "M110" in resp.text
+
+
+def test_catalogue_links_to_objet_detail(client):
+    resp = client.get("/objets")
+    assert 'href="/objet/M42"' in resp.text
+
+
+def test_catalogue_filters_by_type(client):
+    resp = client.get("/objets", params={"type_objet": "Galaxie"})
+    assert resp.status_code == 200
+    assert "M31" in resp.text  # Andromède, a Galaxie
+    assert "M42" not in resp.text  # Orion, a Nébuleuse, must be filtered out
+
+
+def test_catalogue_unknown_type_falls_back_to_all(client):
+    resp = client.get("/objets", params={"type_objet": "Not A Real Type"})
+    assert resp.status_code == 200
+    assert resp.text.count('href="/objet/M') == 110
+
+
+def test_catalogue_shows_filter_chips_with_counts(client):
+    resp = client.get("/objets")
+    assert "Galaxie" in resp.text
+    assert "Nébuleuse" in resp.text
+
+
+def test_catalogue_filters_by_saison(client):
+    # M8 (Sagittaire) is only visible June-Sept; M42 (Orion) only in
+    # winter/early-spring/late-autumn months, never in summer.
+    resp = client.get("/objets", params={"saison": "ete"})
+    assert resp.status_code == 200
+    assert 'href="/objet/M8"' in resp.text
+    assert 'href="/objet/M42"' not in resp.text
+
+
+def test_catalogue_filters_by_type_and_saison_combined(client):
+    resp = client.get("/objets", params={"type_objet": "Nébuleuse", "saison": "ete"})
+    assert resp.status_code == 200
+    assert 'href="/objet/M8"' in resp.text
+    # M45 (Les Pléiades) is an Amas ouvert, not a Nébuleuse -> excluded by type
+    assert 'href="/objet/M45"' not in resp.text
+
+
+def test_catalogue_unknown_saison_falls_back_to_all(client):
+    resp = client.get("/objets", params={"saison": "not-a-real-season"})
+    assert resp.status_code == 200
+    assert resp.text.count('href="/objet/M') == 110
+
+
+def test_catalogue_shows_visibility_strip_on_cards(client):
+    resp = client.get("/objets")
+    assert "visibility-strip" in resp.text
+    assert "month-visible" in resp.text
+
+
+def test_objet_detail_shows_visibility_strip(client):
+    resp = client.get("/objet/M42")
+    assert "visibility-strip" in resp.text
+
+
 def test_objet_detail_returns_200_with_type_and_constellation(client):
     resp = client.get("/objet/M42")
     assert resp.status_code == 200

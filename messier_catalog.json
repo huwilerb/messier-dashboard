@@ -3,660 +3,770 @@
     "designation": "M1",
     "nom_commun": "Nébuleuse du Crabe",
     "type_objet": "Restes de supernova",
-    "constellation": "Taureau"
+    "constellation": "Taureau",
+    "mois_visibles": "1,9,10,11,12"
   },
   {
     "designation": "M2",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Verseau"
+    "constellation": "Verseau",
+    "mois_visibles": "6,7,8,9,10"
   },
   {
     "designation": "M3",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Chiens de Chasse"
+    "constellation": "Chiens de Chasse",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M4",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Scorpion"
+    "constellation": "Scorpion",
+    "mois_visibles": "3,4,5,6,7"
   },
   {
     "designation": "M5",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Serpent"
+    "constellation": "Serpent",
+    "mois_visibles": "3,4,5,6,7"
   },
   {
     "designation": "M6",
     "nom_commun": "Amas du Papillon",
     "type_objet": "Amas ouvert",
-    "constellation": "Scorpion"
+    "constellation": "Scorpion",
+    "mois_visibles": "3,4,5,6,7"
   },
   {
     "designation": "M7",
     "nom_commun": "Amas de Ptolémée",
     "type_objet": "Amas ouvert",
-    "constellation": "Scorpion"
+    "constellation": "Scorpion",
+    "mois_visibles": "3,4,5,6,7"
   },
   {
     "designation": "M8",
     "nom_commun": "Nébuleuse de la Lagune",
     "type_objet": "Nébuleuse",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M9",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Ophiuchus"
+    "constellation": "Ophiuchus",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M10",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Ophiuchus"
+    "constellation": "Ophiuchus",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M11",
     "nom_commun": "Amas du Canard Sauvage",
     "type_objet": "Amas ouvert",
-    "constellation": "Écu de Sobieski"
+    "constellation": "Écu de Sobieski",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M12",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Ophiuchus"
+    "constellation": "Ophiuchus",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M13",
     "nom_commun": "Amas globulaire d'Hercule",
     "type_objet": "Amas globulaire",
-    "constellation": "Hercule"
+    "constellation": "Hercule",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M14",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Ophiuchus"
+    "constellation": "Ophiuchus",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M15",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Pégase"
+    "constellation": "Pégase",
+    "mois_visibles": "6,7,8,9,10"
   },
   {
     "designation": "M16",
     "nom_commun": "Nébuleuse de l'Aigle",
     "type_objet": "Nébuleuse",
-    "constellation": "Serpent"
+    "constellation": "Serpent",
+    "mois_visibles": "3,4,5,6,7"
   },
   {
     "designation": "M17",
     "nom_commun": "Nébuleuse Oméga",
     "type_objet": "Nébuleuse",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M18",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M19",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Ophiuchus"
+    "constellation": "Ophiuchus",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M20",
     "nom_commun": "Nébuleuse Trifide",
     "type_objet": "Nébuleuse",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M21",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M22",
     "nom_commun": "Amas globulaire du Sagittaire",
     "type_objet": "Amas globulaire",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M23",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M24",
     "nom_commun": "Nuage stellaire du Sagittaire",
     "type_objet": "Amas ouvert",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M25",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M26",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Écu de Sobieski"
+    "constellation": "Écu de Sobieski",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M27",
     "nom_commun": "Nébuleuse de l'Haltère",
     "type_objet": "Nébuleuse planétaire",
-    "constellation": "Petit Renard"
+    "constellation": "Petit Renard",
+    "mois_visibles": "5,6,7,8,9"
   },
   {
     "designation": "M28",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M29",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Cygne"
+    "constellation": "Cygne",
+    "mois_visibles": "5,6,7,8,9"
   },
   {
     "designation": "M30",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Capricorne"
+    "constellation": "Capricorne",
+    "mois_visibles": "6,7,8,9,10"
   },
   {
     "designation": "M31",
     "nom_commun": "Galaxie d'Andromède",
     "type_objet": "Galaxie",
-    "constellation": "Andromède"
+    "constellation": "Andromède",
+    "mois_visibles": "8,9,10,11,12"
   },
   {
     "designation": "M32",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Andromède"
+    "constellation": "Andromède",
+    "mois_visibles": "8,9,10,11,12"
   },
   {
     "designation": "M33",
     "nom_commun": "Galaxie du Triangle",
     "type_objet": "Galaxie",
-    "constellation": "Triangle"
+    "constellation": "Triangle",
+    "mois_visibles": "8,9,10,11,12"
   },
   {
     "designation": "M34",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Persée"
+    "constellation": "Persée",
+    "mois_visibles": "1,9,10,11,12"
   },
   {
     "designation": "M35",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Gémeaux"
+    "constellation": "Gémeaux",
+    "mois_visibles": "1,2,3,11,12"
   },
   {
     "designation": "M36",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Cocher"
+    "constellation": "Cocher",
+    "mois_visibles": "1,2,10,11,12"
   },
   {
     "designation": "M37",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Cocher"
+    "constellation": "Cocher",
+    "mois_visibles": "1,2,10,11,12"
   },
   {
     "designation": "M38",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Cocher"
+    "constellation": "Cocher",
+    "mois_visibles": "1,2,10,11,12"
   },
   {
     "designation": "M39",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Cygne"
+    "constellation": "Cygne",
+    "mois_visibles": "5,6,7,8,9"
   },
   {
     "designation": "M40",
     "nom_commun": "Winnecke 4",
     "type_objet": "Amas ouvert",
-    "constellation": "Grande Ourse"
+    "constellation": "Grande Ourse",
+    "mois_visibles": "1,2,3,4,5,6,7,8,9,10,11,12"
   },
   {
     "designation": "M41",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Grand Chien"
+    "constellation": "Grand Chien",
+    "mois_visibles": "1,2,3,11,12"
   },
   {
     "designation": "M42",
     "nom_commun": "Nébuleuse d'Orion",
     "type_objet": "Nébuleuse",
-    "constellation": "Orion"
+    "constellation": "Orion",
+    "mois_visibles": "1,2,10,11,12"
   },
   {
     "designation": "M43",
     "nom_commun": "Nébuleuse de De Mairan",
     "type_objet": "Nébuleuse",
-    "constellation": "Orion"
+    "constellation": "Orion",
+    "mois_visibles": "1,2,10,11,12"
   },
   {
     "designation": "M44",
     "nom_commun": "Amas de la Ruche (Praesepe)",
     "type_objet": "Amas ouvert",
-    "constellation": "Cancer"
+    "constellation": "Cancer",
+    "mois_visibles": "1,2,3,11,12"
   },
   {
     "designation": "M45",
     "nom_commun": "Les Pléiades",
     "type_objet": "Amas ouvert",
-    "constellation": "Taureau"
+    "constellation": "Taureau",
+    "mois_visibles": "1,9,10,11,12"
   },
   {
     "designation": "M46",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Poupe"
+    "constellation": "Poupe",
+    "mois_visibles": "1,2,3,11,12"
   },
   {
     "designation": "M47",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Poupe"
+    "constellation": "Poupe",
+    "mois_visibles": "1,2,3,11,12"
   },
   {
     "designation": "M48",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Hydre"
+    "constellation": "Hydre",
+    "mois_visibles": "1,2,3,4,12"
   },
   {
     "designation": "M49",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Vierge"
+    "constellation": "Vierge",
+    "mois_visibles": "1,2,3,4,5"
   },
   {
     "designation": "M50",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Licorne"
+    "constellation": "Licorne",
+    "mois_visibles": "1,2,3,11,12"
   },
   {
     "designation": "M51",
     "nom_commun": "Galaxie du Tourbillon",
     "type_objet": "Galaxie",
-    "constellation": "Chiens de Chasse"
+    "constellation": "Chiens de Chasse",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M52",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Cassiopée"
+    "constellation": "Cassiopée",
+    "mois_visibles": "1,2,3,4,5,6,7,8,9,10,11,12"
   },
   {
     "designation": "M53",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Chevelure de Bérénice"
+    "constellation": "Chevelure de Bérénice",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M54",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M55",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M56",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Lyre"
+    "constellation": "Lyre",
+    "mois_visibles": "5,6,7,8,9"
   },
   {
     "designation": "M57",
     "nom_commun": "Nébuleuse de l'Anneau",
     "type_objet": "Nébuleuse planétaire",
-    "constellation": "Lyre"
+    "constellation": "Lyre",
+    "mois_visibles": "5,6,7,8,9"
   },
   {
     "designation": "M58",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Vierge"
+    "constellation": "Vierge",
+    "mois_visibles": "1,2,3,4,5"
   },
   {
     "designation": "M59",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Vierge"
+    "constellation": "Vierge",
+    "mois_visibles": "1,2,3,4,5"
   },
   {
     "designation": "M60",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Vierge"
+    "constellation": "Vierge",
+    "mois_visibles": "1,2,3,4,5"
   },
   {
     "designation": "M61",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Vierge"
+    "constellation": "Vierge",
+    "mois_visibles": "1,2,3,4,5"
   },
   {
     "designation": "M62",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Ophiuchus"
+    "constellation": "Ophiuchus",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M63",
     "nom_commun": "Galaxie du Tournesol",
     "type_objet": "Galaxie",
-    "constellation": "Chiens de Chasse"
+    "constellation": "Chiens de Chasse",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M64",
     "nom_commun": "Galaxie de l'Œil Noir",
     "type_objet": "Galaxie",
-    "constellation": "Chevelure de Bérénice"
+    "constellation": "Chevelure de Bérénice",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M65",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Lion"
+    "constellation": "Lion",
+    "mois_visibles": "1,2,3,4,12"
   },
   {
     "designation": "M66",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Lion"
+    "constellation": "Lion",
+    "mois_visibles": "1,2,3,4,12"
   },
   {
     "designation": "M67",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Cancer"
+    "constellation": "Cancer",
+    "mois_visibles": "1,2,3,11,12"
   },
   {
     "designation": "M68",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Hydre"
+    "constellation": "Hydre",
+    "mois_visibles": "1,2,3,4,12"
   },
   {
     "designation": "M69",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M70",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M71",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Petit Renard"
+    "constellation": "Petit Renard",
+    "mois_visibles": "5,6,7,8,9"
   },
   {
     "designation": "M72",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Verseau"
+    "constellation": "Verseau",
+    "mois_visibles": "6,7,8,9,10"
   },
   {
     "designation": "M73",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Verseau"
+    "constellation": "Verseau",
+    "mois_visibles": "6,7,8,9,10"
   },
   {
     "designation": "M74",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Poissons"
+    "constellation": "Poissons",
+    "mois_visibles": "8,9,10,11,12"
   },
   {
     "designation": "M75",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Sagittaire"
+    "constellation": "Sagittaire",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M76",
     "nom_commun": "Petite Nébuleuse de l'Haltère",
     "type_objet": "Nébuleuse planétaire",
-    "constellation": "Persée"
+    "constellation": "Persée",
+    "mois_visibles": "1,9,10,11,12"
   },
   {
     "designation": "M77",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Baleine"
+    "constellation": "Baleine",
+    "mois_visibles": "8,9,10,11,12"
   },
   {
     "designation": "M78",
     "nom_commun": null,
     "type_objet": "Nébuleuse",
-    "constellation": "Orion"
+    "constellation": "Orion",
+    "mois_visibles": "1,2,10,11,12"
   },
   {
     "designation": "M79",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Lièvre"
+    "constellation": "Lièvre",
+    "mois_visibles": "1,2,10,11,12"
   },
   {
     "designation": "M80",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Scorpion"
+    "constellation": "Scorpion",
+    "mois_visibles": "3,4,5,6,7"
   },
   {
     "designation": "M81",
     "nom_commun": "Galaxie de Bode",
     "type_objet": "Galaxie",
-    "constellation": "Grande Ourse"
+    "constellation": "Grande Ourse",
+    "mois_visibles": "1,2,3,4,5,6,7,8,9,10,11,12"
   },
   {
     "designation": "M82",
     "nom_commun": "Galaxie du Cigare",
     "type_objet": "Galaxie",
-    "constellation": "Grande Ourse"
+    "constellation": "Grande Ourse",
+    "mois_visibles": "1,2,3,4,5,6,7,8,9,10,11,12"
   },
   {
     "designation": "M83",
     "nom_commun": "Galaxie du Moulinet Austral",
     "type_objet": "Galaxie",
-    "constellation": "Hydre"
+    "constellation": "Hydre",
+    "mois_visibles": "1,2,3,4,12"
   },
   {
     "designation": "M84",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Vierge"
+    "constellation": "Vierge",
+    "mois_visibles": "1,2,3,4,5"
   },
   {
     "designation": "M85",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Chevelure de Bérénice"
+    "constellation": "Chevelure de Bérénice",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M86",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Vierge"
+    "constellation": "Vierge",
+    "mois_visibles": "1,2,3,4,5"
   },
   {
     "designation": "M87",
     "nom_commun": "Galaxie de la Vierge A",
     "type_objet": "Galaxie",
-    "constellation": "Vierge"
+    "constellation": "Vierge",
+    "mois_visibles": "1,2,3,4,5"
   },
   {
     "designation": "M88",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Chevelure de Bérénice"
+    "constellation": "Chevelure de Bérénice",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M89",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Vierge"
+    "constellation": "Vierge",
+    "mois_visibles": "1,2,3,4,5"
   },
   {
     "designation": "M90",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Vierge"
+    "constellation": "Vierge",
+    "mois_visibles": "1,2,3,4,5"
   },
   {
     "designation": "M91",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Chevelure de Bérénice"
+    "constellation": "Chevelure de Bérénice",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M92",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Hercule"
+    "constellation": "Hercule",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M93",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Poupe"
+    "constellation": "Poupe",
+    "mois_visibles": "1,2,3,11,12"
   },
   {
     "designation": "M94",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Chiens de Chasse"
+    "constellation": "Chiens de Chasse",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M95",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Lion"
+    "constellation": "Lion",
+    "mois_visibles": "1,2,3,4,12"
   },
   {
     "designation": "M96",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Lion"
+    "constellation": "Lion",
+    "mois_visibles": "1,2,3,4,12"
   },
   {
     "designation": "M97",
     "nom_commun": "Nébuleuse du Hibou",
     "type_objet": "Nébuleuse planétaire",
-    "constellation": "Grande Ourse"
+    "constellation": "Grande Ourse",
+    "mois_visibles": "1,2,3,4,5,6,7,8,9,10,11,12"
   },
   {
     "designation": "M98",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Chevelure de Bérénice"
+    "constellation": "Chevelure de Bérénice",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M99",
     "nom_commun": "Galaxie du Moulinet",
     "type_objet": "Galaxie",
-    "constellation": "Chevelure de Bérénice"
+    "constellation": "Chevelure de Bérénice",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M100",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Chevelure de Bérénice"
+    "constellation": "Chevelure de Bérénice",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M101",
     "nom_commun": "Galaxie du Moulinet",
     "type_objet": "Galaxie",
-    "constellation": "Grande Ourse"
+    "constellation": "Grande Ourse",
+    "mois_visibles": "1,2,3,4,5,6,7,8,9,10,11,12"
   },
   {
     "designation": "M102",
     "nom_commun": "Galaxie du Fuseau",
     "type_objet": "Galaxie",
-    "constellation": "Dragon"
+    "constellation": "Dragon",
+    "mois_visibles": "1,2,3,4,5,6,7,8,9,10,11,12"
   },
   {
     "designation": "M103",
     "nom_commun": null,
     "type_objet": "Amas ouvert",
-    "constellation": "Cassiopée"
+    "constellation": "Cassiopée",
+    "mois_visibles": "1,2,3,4,5,6,7,8,9,10,11,12"
   },
   {
     "designation": "M104",
     "nom_commun": "Galaxie du Sombrero",
     "type_objet": "Galaxie",
-    "constellation": "Vierge"
+    "constellation": "Vierge",
+    "mois_visibles": "1,2,3,4,5"
   },
   {
     "designation": "M105",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Lion"
+    "constellation": "Lion",
+    "mois_visibles": "1,2,3,4,12"
   },
   {
     "designation": "M106",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Chiens de Chasse"
+    "constellation": "Chiens de Chasse",
+    "mois_visibles": "2,3,4,5,6"
   },
   {
     "designation": "M107",
     "nom_commun": null,
     "type_objet": "Amas globulaire",
-    "constellation": "Ophiuchus"
+    "constellation": "Ophiuchus",
+    "mois_visibles": "4,5,6,7,8"
   },
   {
     "designation": "M108",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Grande Ourse"
+    "constellation": "Grande Ourse",
+    "mois_visibles": "1,2,3,4,5,6,7,8,9,10,11,12"
   },
   {
     "designation": "M109",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Grande Ourse"
+    "constellation": "Grande Ourse",
+    "mois_visibles": "1,2,3,4,5,6,7,8,9,10,11,12"
   },
   {
     "designation": "M110",
     "nom_commun": null,
     "type_objet": "Galaxie",
-    "constellation": "Andromède"
+    "constellation": "Andromède",
+    "mois_visibles": "8,9,10,11,12"
   }
 ]

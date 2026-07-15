@@ -34,6 +34,14 @@ class ObjetMessier(SQLModel, table=True):
     # Nebuleuse planetaire, Restes de supernova
     constellation: str = Field(max_length=50)
     description: str | None = Field(default=None)  # optional short description
+    # Comma-separated month numbers (1-12) when the object reaches a usable
+    # altitude in the evening/night sky from Fribourg, Switzerland. Generated
+    # by scripts/compute_visibility.py; see that file for the method.
+    mois_visibles: str = Field(default="", max_length=50)
+
+    @property
+    def mois_visibles_list(self) -> list[int]:
+        return [int(m) for m in self.mois_visibles.split(",") if m]
 
 
 class Observation(SQLModel, table=True):

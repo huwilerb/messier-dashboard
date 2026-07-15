@@ -33,14 +33,14 @@
         <img src="/uploads/{{ observation.photo_path }}" class="observation-thumb" alt="Photo de {{ objet.designation }}" loading="lazy">
       </a>
     {% endif %}
-    <a href="/observations/{{ observation.id }}/delete"
+    <button type="button"
        class="btn btn-delete btn-small"
-       hx-get="/observations/{{ observation.id }}/delete"
+       hx-post="/observations/{{ observation.id }}/delete"
        hx-target="closest .object-card"
        hx-swap="outerHTML"
        hx-confirm="Supprimer l'observation de {{ objet.designation }} ?">
       Supprimer
-    </a>
+    </button>
   {% else %}
     <form class="observation-form"
           hx-post="/observations/add"

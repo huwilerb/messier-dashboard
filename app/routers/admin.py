@@ -100,7 +100,7 @@ def reset_password(
     return RedirectResponse(url="/admin", status_code=303)
 
 
-@router.get("/groupes/{groupe_id}/delete")
+@router.post("/groupes/{groupe_id}/delete")
 def delete_groupe(
     groupe_id: int,
     session: Annotated[Session, Depends(get_session)],

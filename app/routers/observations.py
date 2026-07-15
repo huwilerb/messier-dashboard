@@ -106,6 +106,9 @@ def dashboard(
     )
 
 
+_ALLOWED_PHOTO_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".heic", ".heif"}
+
+
 def _save_photo(photo: UploadFile, contents: bytes) -> str:
     """Persist an uploaded photo under UPLOAD_DIR with a sanitized name.
 
@@ -115,9 +118,12 @@ def _save_photo(photo: UploadFile, contents: bytes) -> str:
     upload_dir.mkdir(parents=True, exist_ok=True)
 
     original_suffix = Path(photo.filename or "").suffix.lower()
-    # Keep only a small allowlist-ish suffix; fall back to .jpg if unusual/absent.
+    # Only ever persist a known image extension. Uploads are served back
+    # publicly from /uploads/, so anything outside this allowlist (e.g.
+    # .html, .svg) would let the file's declared content-type be used to
+    # run script in the app's origin -- fall back to .jpg instead.
     safe_suffix = (
-        original_suffix if original_suffix and len(original_suffix) <= 10 else ".jpg"
+        original_suffix if original_suffix in _ALLOWED_PHOTO_SUFFIXES else ".jpg"
     )
     filename = f"{uuid.uuid4().hex}{safe_suffix}"
 
@@ -218,7 +224,7 @@ async def add_observation(
     )
 
 
-@router.get("/observations/{observation_id}/delete")
+@router.post("/observations/{observation_id}/delete")
 def delete_observation(
     request: Request,
     observation_id: int,

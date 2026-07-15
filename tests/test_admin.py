@@ -85,7 +85,7 @@ def test_reset_password_new_works_old_fails(admin_client, client, db_session):
 
 def test_delete_groupe_admin_only(group_client, db_session):
     target_id = get_groupe_id(db_session, "TestGroup2")
-    resp = group_client.get(f"/admin/groupes/{target_id}/delete")
+    resp = group_client.post(f"/admin/groupes/{target_id}/delete")
     assert resp.status_code == 403
 
 
@@ -106,7 +106,7 @@ def test_delete_groupe_removes_it_and_its_observations(
     )
 
     target_id = get_groupe_id(db_session, "TestGroup2")
-    resp = admin_client.get(
+    resp = admin_client.post(
         f"/admin/groupes/{target_id}/delete", follow_redirects=False
     )
     assert resp.status_code == 303
@@ -125,5 +125,5 @@ def test_delete_groupe_removes_it_and_its_observations(
 
 def test_admin_cannot_delete_own_groupe(admin_client, db_session):
     admin_id = get_groupe_id(db_session, "TestAdmin")
-    resp = admin_client.get(f"/admin/groupes/{admin_id}/delete")
+    resp = admin_client.post(f"/admin/groupes/{admin_id}/delete")
     assert resp.status_code == 400

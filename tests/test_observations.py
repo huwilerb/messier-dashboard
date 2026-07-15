@@ -198,11 +198,11 @@ def test_delete_observation_removes_it_and_is_owner_only(
     assert obs is not None
 
     # Another groupe may not delete it.
-    forbidden = group2_client.get(f"/observations/{obs.id}/delete")
+    forbidden = group2_client.post(f"/observations/{obs.id}/delete")
     assert forbidden.status_code == 403
 
     # The owning groupe can.
-    ok = group_client.get(
+    ok = group_client.post(
         f"/observations/{obs.id}/delete", headers={"HX-Request": "true"}
     )
     assert ok.status_code == 200

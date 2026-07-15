@@ -15,15 +15,14 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Form, HTTPException, Request, status
 from fastapi.responses import RedirectResponse
-from fastapi.templating import Jinja2Templates
-from sqlmodel import Session, select
+from sqlmodel import Session, func, select
 
 from app.auth import hash_password, require_admin
 from app.database import get_session
 from app.models import Groupe, Observation
+from app.templating import templates
 
 router = APIRouter(prefix="/admin", tags=["admin"])
-templates = Jinja2Templates(directory="app/templates")
 
 
 @router.get("")
@@ -32,22 +31,25 @@ def admin_home(
     session: Annotated[Session, Depends(get_session)],
     groupe: Annotated[Groupe, Depends(require_admin)],
 ):
-    all_groupes = session.exec(select(Groupe)).all()
+    # Left join + group by so groups with zero observations still appear
+    # (count 0), in one aggregate query instead of one SELECT per group.
+    rows = session.exec(
+        select(Groupe, func.count(Observation.id))
+        .join(Observation, Observation.groupe_id == Groupe.id, isouter=True)
+        .group_by(Groupe.id)
+        .order_by(Groupe.id)
+    ).all()
 
-    groupes: list[dict] = []
-    for g in all_groupes:
-        obs_count = len(
-            session.exec(select(Observation).where(Observation.groupe_id == g.id)).all()
-        )
-        groupes.append(
-            {
-                "id": g.id,
-                "nom": g.nom,
-                "is_admin": g.is_admin,
-                "created_at": g.created_at,
-                "observations_count": obs_count,
-            }
-        )
+    groupes = [
+        {
+            "id": g.id,
+            "nom": g.nom,
+            "is_admin": g.is_admin,
+            "created_at": g.created_at,
+            "observations_count": obs_count,
+        }
+        for g, obs_count in rows
+    ]
 
     return templates.TemplateResponse(
         request,

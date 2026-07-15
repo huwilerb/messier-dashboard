@@ -6,10 +6,15 @@ from fastapi import Depends, HTTPException, Request, status
 from passlib.context import CryptContext
 from sqlmodel import Session
 
+from app.config import settings
 from app.database import get_session
 from app.models import Groupe
 
-_pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# deprecated="auto" means hashes made at a previous BCRYPT_ROUNDS value keep
+# verifying and get transparently rehashed at the current cost on next login.
+_pwd_context = CryptContext(
+    schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=settings.BCRYPT_ROUNDS
+)
 
 
 def hash_password(password: str) -> str:

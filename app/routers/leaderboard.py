@@ -44,15 +44,14 @@ Context variables passed to templates:
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
-from fastapi.templating import Jinja2Templates
-from sqlmodel import Session, select
+from sqlmodel import Session, func, select
 
 from app.database import get_session
 from app.models import Groupe, ObjetMessier, Observation
 from app.routers.observations import _all_objets
+from app.templating import templates
 
 router = APIRouter(tags=["leaderboard"])
-templates = Jinja2Templates(directory="app/templates")
 
 # Calendar-order season -> months, using standard meteorological seasons.
 SEASON_MONTHS: dict[str, set[int]] = {
@@ -121,19 +120,26 @@ def leaderboard_view(
     request: Request,
     session: Annotated[Session, Depends(get_session)],
 ):
-    groupes = session.exec(select(Groupe).where(Groupe.is_admin == False)).all()  # noqa: E712
-    total_objets = len(session.exec(select(ObjetMessier)).all())
+    total_objets = len(_all_objets(session))
 
-    rows: list[dict] = []
-    for groupe in groupes:
-        observations = session.exec(
-            select(Observation).where(Observation.groupe_id == groupe.id)
-        ).all()
-        distinct_objets = {obs.objet_id for obs in observations}
-        count = len(distinct_objets)
-        percent = round((count / total_objets) * 100, 1) if total_objets else 0.0
-        rows.append({"nom": groupe.nom, "count": count, "percent": percent})
+    # Left join + group by so groups with zero observations still get a
+    # row (count 0), matching the previous per-group-loop behavior, in a
+    # single aggregate query instead of one SELECT per group.
+    counts = session.exec(
+        select(Groupe.nom, func.count(func.distinct(Observation.objet_id)))
+        .where(Groupe.is_admin == False)  # noqa: E712
+        .join(Observation, Observation.groupe_id == Groupe.id, isouter=True)
+        .group_by(Groupe.id, Groupe.nom)
+    ).all()
 
+    rows = [
+        {
+            "nom": nom,
+            "count": count,
+            "percent": round((count / total_objets) * 100, 1) if total_objets else 0.0,
+        }
+        for nom, count in counts
+    ]
     rows.sort(key=lambda r: r["count"], reverse=True)
 
     return templates.TemplateResponse(
@@ -157,23 +163,24 @@ def objet_detail(
             status_code=status.HTTP_404_NOT_FOUND, detail="Objet inconnu"
         )
 
+    # Single join instead of a session.get(Groupe, ...) per observation.
     observations = session.exec(
-        select(Observation).where(Observation.objet_id == objet.id)
+        select(Observation, Groupe.nom)
+        .join(Groupe, Groupe.id == Observation.groupe_id)
+        .where(Observation.objet_id == objet.id)
+        .order_by(Observation.date_observation.desc())
     ).all()
 
-    rows: list[dict] = []
-    for obs in observations:
-        groupe = session.get(Groupe, obs.groupe_id)
-        rows.append(
-            {
-                "groupe_nom": groupe.nom if groupe else "?",
-                "date_observation": obs.date_observation,
-                "type_capture": obs.type_capture,
-                "notes": obs.notes,
-                "photo_path": obs.photo_path,
-            }
-        )
-    rows.sort(key=lambda r: r["date_observation"], reverse=True)
+    rows = [
+        {
+            "groupe_nom": groupe_nom,
+            "date_observation": obs.date_observation,
+            "type_capture": obs.type_capture,
+            "notes": obs.notes,
+            "photo_path": obs.photo_path,
+        }
+        for obs, groupe_nom in observations
+    ]
 
     return templates.TemplateResponse(
         request,

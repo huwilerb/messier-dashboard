@@ -47,11 +47,10 @@
             </form>
           </td>
           <td>
-            <a href="/admin/groupes/{{ g.id }}/delete"
-               class="btn btn-delete btn-small"
-               onclick="return confirm('Supprimer le groupe « {{ g.nom }} » et toutes ses observations ?');">
-              Supprimer
-            </a>
+            <form method="post" action="/admin/groupes/{{ g.id }}/delete" class="inline-form small"
+                  onsubmit="return confirm('Supprimer le groupe « {{ g.nom }} » et toutes ses observations ?');">
+              <button type="submit" class="btn btn-delete btn-small">Supprimer</button>
+            </form>
           </td>
         </tr>
         {% else %}

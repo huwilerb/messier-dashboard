@@ -4,13 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Messier Marathon{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/style.css">
   <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 </head>
 <body>
   <header class="site-header">
     <nav class="navbar">
-      <a href="/leaderboard" class="brand">Messier Marathon</a>
+      <a href="/leaderboard" class="brand"><span class="brand-mark" aria-hidden="true"></span> Messier Marathon</a>
       <div class="nav-links">
         <a href="/objets">Catalogue</a>
         <a href="/dashboard">Dashboard</a>

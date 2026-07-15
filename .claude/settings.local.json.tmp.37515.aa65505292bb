@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -)",
+      "Bash(python3 *)",
+      "Bash(uv run *)",
+      "Bash(curl -s -b /tmp/cookies3.txt http://127.0.0.1:8560/dashboard)",
+      "Bash(curl -s http://127.0.0.1:8560/objet/M42)",
+      "Bash(curl -s http://127.0.0.1:8560/leaderboard)",
+      "Bash(curl -s -b /tmp/cookies3.txt -H 'HX-Request: true' -X POST http://127.0.0.1:8560/observations/add -F objet_id=1 -F date_observation=2026-01-15 -F type_capture=visuel -F notes=Test -o /tmp/htmx_response.html)",
+      "Read(//tmp/**)",
+      "Bash(pkill -f \"uvicorn app.main:app.*8560\")",
+      "Bash(rm -f /tmp/messier-redesign-verify.db /tmp/cookies3.txt /tmp/htmx_response.html)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
+    ]
+  }
+}

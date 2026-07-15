@@ -6,7 +6,7 @@
 <div id="progress-bar" class="progress-block"{% if oob %} hx-swap-oob="true"{% endif %}>
   <p class="progress-label">{{ progress_count }}/{{ total }} capturés — {{ progress_percent }}%</p>
   <div class="progress-track">
-    <div class="progress-fill" style="width: {{ progress_percent }}%;"></div>
+    <div class="progress-fill-tally" style="width: {{ progress_percent }}%;"></div>
   </div>
 </div>
 {% endmacro %}

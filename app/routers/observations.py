@@ -42,16 +42,15 @@ from fastapi import (
     status,
 )
 from fastapi.responses import RedirectResponse
-from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
 
 from app.auth import get_current_groupe
 from app.config import settings
 from app.database import get_session
 from app.models import Groupe, ObjetMessier, Observation
+from app.templating import templates
 
 router = APIRouter(tags=["observations"])
-templates = Jinja2Templates(directory="app/templates")
 
 
 def _designation_sort_key(objet: ObjetMessier) -> int:
@@ -60,9 +59,24 @@ def _designation_sort_key(objet: ObjetMessier) -> int:
     return int(digits) if digits else 0
 
 
+# The 110-object catalog is static reference data -- nothing in the app
+# ever edits ObjetMessier at runtime (only seed.py does, at startup,
+# before any request is served). Re-querying and re-sorting it on every
+# dashboard/catalogue request is pure waste, so cache it in-process once.
+_objets_cache: list[ObjetMessier] | None = None
+
+
 def _all_objets(session: Session) -> list[ObjetMessier]:
-    objets = session.exec(select(ObjetMessier)).all()
-    return sorted(objets, key=_designation_sort_key)
+    global _objets_cache
+    if _objets_cache is None:
+        objets = session.exec(select(ObjetMessier)).all()
+        # Detach just these rows (not session.expunge_all()) so cached rows
+        # outlive this session without touching unrelated objects (groupe,
+        # a just-committed observation, ...) already tracked by it.
+        for objet in objets:
+            session.expunge(objet)
+        _objets_cache = sorted(objets, key=_designation_sort_key)
+    return _objets_cache
 
 
 def _observations_for_groupe(
@@ -132,7 +146,7 @@ def _save_photo(photo: UploadFile, contents: bytes) -> str:
 
 
 @router.post("/observations/add")
-async def add_observation(
+def add_observation(
     request: Request,
     session: Annotated[Session, Depends(get_session)],
     groupe: Annotated[Groupe, Depends(get_current_groupe)],
@@ -153,7 +167,7 @@ async def add_observation(
     photo_path: str | None = None
     error: str | None = None
     if photo is not None and photo.filename:
-        contents = await photo.read()
+        contents = photo.file.read()  # sync read: we're in a threadpool here
         if len(contents) > settings.max_upload_size_bytes:
             error = f"Photo trop volumineuse (max {settings.MAX_UPLOAD_SIZE_MB} Mo)."
         else:
@@ -205,9 +219,8 @@ async def add_observation(
         return RedirectResponse(url="/dashboard", status_code=303)
 
     observations_by_objet_id = _observations_for_groupe(session, groupe.id)
-    total_objets = session.exec(select(ObjetMessier)).all()
     progress_count, progress_percent = _progress(
-        observations_by_objet_id, len(total_objets)
+        observations_by_objet_id, len(_all_objets(session))
     )
 
     return templates.TemplateResponse(
@@ -257,9 +270,8 @@ def delete_observation(
         return RedirectResponse(url="/dashboard", status_code=303)
 
     observations_by_objet_id = _observations_for_groupe(session, groupe.id)
-    total_objets = session.exec(select(ObjetMessier)).all()
     progress_count, progress_percent = _progress(
-        observations_by_objet_id, len(total_objets)
+        observations_by_objet_id, len(_all_objets(session))
     )
 
     return templates.TemplateResponse(

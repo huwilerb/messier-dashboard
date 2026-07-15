@@ -3,6 +3,7 @@
 from collections.abc import Generator
 from pathlib import Path
 
+from sqlalchemy import event
 from sqlmodel import Session, SQLModel, create_engine
 
 from app.config import settings
@@ -16,6 +17,20 @@ _connect_args = (
 engine = create_engine(
     settings.DATABASE_URL, echo=settings.DEBUG, connect_args=_connect_args
 )
+
+if settings.DATABASE_URL.startswith("sqlite"):
+    # Defaults (journal_mode=DELETE, synchronous=FULL, no busy_timeout) make
+    # every writer block all readers and fsync on every commit, and make
+    # concurrent access raise "database is locked" instead of waiting --
+    # all needlessly costly on the slow disk/IO of a small low-end host.
+    @event.listens_for(engine, "connect")
+    def _set_sqlite_pragmas(dbapi_connection, _connection_record) -> None:
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.execute("PRAGMA synchronous=NORMAL")
+        cursor.execute("PRAGMA busy_timeout=5000")
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
 
 
 def _ensure_sqlite_parent_dir() -> None:

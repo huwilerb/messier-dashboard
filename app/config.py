@@ -36,6 +36,13 @@ class Settings(BaseSettings):
     # Business rule: one capture per (groupe, objet) when True.
     UNIQUE_OBSERVATION_PER_OBJECT: bool = True
 
+    # bcrypt cost factor for password hashing. 12 is a solid default; on
+    # genuinely CPU-constrained hardware a login can take the better part
+    # of a second at 12 (it runs in the request threadpool, so it doesn't
+    # block other requests, but it's a visible per-login cost) -- lower to
+    # 10-11 there if that's a real problem. Do not raise/lower lightly.
+    BCRYPT_ROUNDS: int = 12
+
     @model_validator(mode="after")
     def _reject_insecure_secret_key_outside_debug(self) -> "Settings":
         # The placeholder key is only acceptable for local/DEBUG use. Refuse

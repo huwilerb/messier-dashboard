@@ -3,10 +3,13 @@
    deleting a single observation (which only targets one object-card)
    still refreshes this counter in the same response. #}
 {% macro progress_bar(progress_count, progress_percent, total=110, oob=False) %}
+{% set filled_ticks = (progress_count * 20) // total %}
 <div id="progress-bar" class="progress-block"{% if oob %} hx-swap-oob="true"{% endif %}>
   <p class="progress-label">{{ progress_count }}/{{ total }} capturés — {{ progress_percent }}%</p>
   <div class="progress-track">
-    <div class="progress-fill" style="width: {{ progress_percent }}%;"></div>
+    {% for i in range(20) %}
+      <span class="progress-tick{% if i < filled_ticks %} progress-tick-filled{% endif %}"></span>
+    {% endfor %}
   </div>
 </div>
 {% endmacro %}

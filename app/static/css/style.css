@@ -1,21 +1,49 @@
-/* Messier Marathon — minimal, dark, astronomy-themed, mobile-first CSS.
-   No framework: plain flexbox/grid + custom properties. */
+/* Messier Marathon — "Field Logbook".
+   The working color of amateur astronomy is red: a red flashlight
+   preserves night vision, so red is not a decoration here, it's the
+   actual light astronomers observe by. Content is styled like pages of
+   a paper observing log (parchment panels, ledger tables, index-card
+   entries) laid out on a dark desk at night. No framework: plain
+   flexbox/grid + custom properties. */
 
 :root {
-  --bg: #0b0e1a;
-  --bg-alt: #131728;
-  --bg-card: #171c33;
-  --border: #2a3155;
-  --text: #e8ebf7;
-  --text-muted: #9aa3c7;
-  --accent: #f2c14e;      /* starlight gold */
-  --accent-2: #6ea8fe;    /* nebula blue */
-  --success: #4ecb8f;
-  --success-bg: rgba(78, 203, 143, 0.12);
-  --danger: #f2607a;
-  --danger-bg: rgba(242, 96, 122, 0.12);
-  --radius: 10px;
-  --shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  /* -- the desk / night sky: dark chrome (nav, page background) -- */
+  --sky: #14171f;
+  --sky-deep: #0d0f15;
+  --sky-line: #2b2f3a;
+  --sky-text: #d9d4c4;
+  --sky-text-muted: #8b8b7c;
+
+  /* -- the logbook page: paper panels (cards, tables, forms) -- */
+  --paper: #ece6d6;
+  --paper-alt: #e0d8c0;
+  --ink: #2b2419;
+  --ink-muted: #6b6152;
+  --paper-line: #cabf9e;
+
+  /* -- accents (decorative: fills, borders, backgrounds) -- */
+  --redlight: #b8452c;      /* the astronomer's flashlight */
+  --redlight-dim: #8a3320;
+  --redlight-bg: rgba(184, 69, 44, 0.12);
+  --phosphor: #3f7a5c;      /* captured/success — old terminal green */
+  --phosphor-bg: rgba(63, 122, 92, 0.14);
+  --brass: #8a6d33;         /* structural accent, telescope-metal */
+  --oxblood: #6e2a20;       /* destructive actions */
+  --oxblood-bg: rgba(110, 42, 32, 0.12);
+
+  /* -- accents (text: AA contrast requires a lighter tone on --sky and a
+     darker tone on --paper — a single value can't clear 4.5:1 on both) -- */
+  --redlight-sky: #d8623f;
+  --redlight-paper: #9c3721;
+  --phosphor-paper: #2f6047;
+  --oxblood-sky: #e0574f;
+
+  --radius: 3px;
+  --shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
+
+  --font-display: "Spectral", "Iowan Old Style", Georgia, serif;
+  --font-body: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  --font-data: "IBM Plex Mono", "SFMono-Regular", Consolas, Menlo, monospace;
 }
 
 * {
@@ -28,9 +56,9 @@ html, body {
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  background: var(--sky);
+  color: var(--sky-text);
+  font-family: var(--font-body);
   line-height: 1.5;
   min-height: 100vh;
   display: flex;
@@ -38,7 +66,7 @@ body {
 }
 
 a {
-  color: var(--accent-2);
+  color: var(--redlight-sky);
   text-decoration: none;
 }
 
@@ -47,13 +75,24 @@ a:hover {
 }
 
 h1, h2, h3 {
-  color: var(--text);
-  line-height: 1.25;
+  font-family: var(--font-display);
+  color: var(--sky-text);
+  line-height: 1.2;
+  font-weight: 600;
 }
 
 .subtitle {
-  color: var(--text-muted);
+  color: var(--sky-text-muted);
   margin-top: -0.5rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
 }
 
 /* ---------- Layout ---------- */
@@ -68,17 +107,18 @@ h1, h2, h3 {
 
 .site-footer {
   text-align: center;
-  color: var(--text-muted);
-  font-size: 0.85rem;
+  color: var(--sky-text-muted);
+  font-size: 0.8rem;
+  font-family: var(--font-data);
   padding: 1.5rem 1rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--sky-line);
 }
 
 /* ---------- Nav ---------- */
 
 .site-header {
-  background: var(--bg-alt);
-  border-bottom: 1px solid var(--border);
+  background: var(--sky-deep);
+  border-bottom: 1px solid var(--redlight-dim);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -96,29 +136,70 @@ h1, h2, h3 {
 }
 
 .brand {
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--sky-text);
+  letter-spacing: 0.02em;
 }
 
 .brand:hover {
   text-decoration: none;
 }
 
+.brand-mark {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  border: 1.5px solid var(--redlight);
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.brand-mark::before,
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  background: var(--redlight);
+}
+
+.brand-mark::before {
+  top: 50%;
+  left: -3px;
+  right: -3px;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.brand-mark::after {
+  left: 50%;
+  top: -3px;
+  bottom: -3px;
+  width: 1px;
+  transform: translateX(-50%);
+}
+
 .nav-links {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .nav-links a {
-  color: var(--text);
-  font-weight: 500;
+  color: var(--sky-text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
 .nav-links a:hover {
-  color: var(--accent-2);
+  color: var(--redlight-sky);
   text-decoration: none;
 }
 
@@ -130,14 +211,17 @@ h1, h2, h3 {
   background: none;
   border: none;
   padding: 0;
-  color: var(--text);
+  color: var(--sky-text-muted);
   font: inherit;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
   cursor: pointer;
 }
 
 .link-button:hover {
-  color: var(--danger);
+  color: var(--oxblood-sky);
   text-decoration: underline;
 }
 
@@ -147,58 +231,73 @@ h1, h2, h3 {
   display: inline-block;
   border: 1px solid transparent;
   border-radius: var(--radius);
-  padding: 0.55rem 1rem;
-  font-size: 0.95rem;
-  font-weight: 600;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   cursor: pointer;
   text-align: center;
+  font-family: var(--font-body);
 }
 
 .btn-small {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.72rem;
 }
 
 .btn-primary {
-  background: var(--accent-2);
-  color: #0b0e1a;
+  background: var(--redlight-dim);
+  color: var(--paper);
 }
 
 .btn-primary:hover {
-  background: #85b9ff;
+  filter: brightness(1.2);
   text-decoration: none;
 }
 
 .btn-secondary {
-  background: var(--bg-card);
-  border-color: var(--border);
-  color: var(--text);
+  background: transparent;
+  border-color: var(--brass);
+  color: var(--ink);
 }
 
 .btn-secondary:hover {
-  border-color: var(--accent-2);
+  border-color: var(--redlight);
+  color: var(--redlight);
   text-decoration: none;
 }
 
 .btn-delete {
-  background: var(--danger-bg);
-  color: var(--danger);
-  border-color: var(--danger);
+  background: var(--oxblood-bg);
+  color: var(--oxblood);
+  border-color: var(--oxblood);
 }
 
 .btn-delete:hover {
-  background: var(--danger);
-  color: #0b0e1a;
+  background: var(--oxblood);
+  color: var(--paper);
   text-decoration: none;
 }
 
-/* ---------- Forms ---------- */
+/* ---------- Forms ----------
+   Underline fields, not boxes: a form filled in a logbook, not a web
+   app. Fields on dark chrome (login) and on paper panels (observation
+   forms, admin) both work via currentColor-relative borders. */
 
 .field-label {
   display: block;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 0.65rem;
+  font-size: 0.78rem;
+  font-family: var(--font-data);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sky-text-muted);
+  margin-bottom: 0.7rem;
+}
+
+.object-card .field-label,
+.admin-section .field-label {
+  color: var(--ink-muted);
 }
 
 input[type="text"],
@@ -208,19 +307,28 @@ input[type="file"],
 textarea {
   display: block;
   width: 100%;
-  margin-top: 0.3rem;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.5rem 0.6rem;
-  color: var(--text);
+  margin-top: 0.35rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--sky-line);
+  border-radius: 0;
+  padding: 0.4rem 0.1rem;
+  color: inherit;
   font: inherit;
+}
+
+.object-card input,
+.object-card textarea,
+.admin-section input {
+  border-bottom-color: var(--paper-line);
+  color: var(--ink);
 }
 
 input:focus,
 textarea:focus {
-  outline: 2px solid var(--accent-2);
-  outline-offset: 1px;
+  outline: none;
+  border-bottom: 2px solid var(--redlight);
+  padding-bottom: calc(0.4rem - 1px);
 }
 
 textarea {
@@ -228,16 +336,27 @@ textarea {
 }
 
 fieldset.capture-type-choice {
-  border: 1px solid var(--border);
-  border-radius: 6px;
+  border: none;
+  border-bottom: 1px solid var(--sky-line);
   margin: 0 0 0.65rem;
-  padding: 0.5rem 0.6rem;
+  padding: 0.3rem 0;
+}
+
+.object-card fieldset.capture-type-choice {
+  border-bottom-color: var(--paper-line);
 }
 
 fieldset.capture-type-choice legend {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  padding: 0 0.3rem;
+  font-size: 0.72rem;
+  font-family: var(--font-data);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sky-text-muted);
+  padding: 0;
+}
+
+.object-card fieldset.capture-type-choice legend {
+  color: var(--ink-muted);
 }
 
 fieldset.capture-type-choice label {
@@ -253,22 +372,22 @@ fieldset.capture-type-choice label {
   align-items: center;
   gap: 0.4rem;
   font-size: 0.9rem;
-  color: var(--text-muted);
+  color: var(--sky-text-muted);
 }
 
 .form-error {
-  background: var(--danger-bg);
-  color: var(--danger);
-  border: 1px solid var(--danger);
-  border-radius: 6px;
+  background: var(--oxblood-bg);
+  color: var(--oxblood);
+  border-left: 3px solid var(--oxblood);
+  border-radius: 0;
   padding: 0.5rem 0.75rem;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .stacked-form {
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: 1.1rem;
   max-width: 360px;
 }
 
@@ -293,138 +412,246 @@ fieldset.capture-type-choice label {
 .auth-card {
   max-width: 400px;
   margin: 2rem auto;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+  background: var(--paper);
+  color: var(--ink);
   border-radius: var(--radius);
-  padding: 1.5rem;
+  padding: 1.75rem;
   box-shadow: var(--shadow);
 }
 
-/* ---------- Progress bar ---------- */
+.auth-card h1 {
+  color: var(--ink);
+}
+
+.auth-card .subtitle {
+  color: var(--ink-muted);
+}
+
+.auth-card .field-label {
+  color: var(--ink-muted);
+}
+
+.auth-card input {
+  border-bottom-color: var(--paper-line);
+  color: var(--ink);
+}
+
+/* ---------- Progress tally ---------- */
 
 .progress-block {
-  margin: 1rem 0 1.5rem;
+  margin: 1rem 0 1.75rem;
 }
 
 .progress-label {
+  font-family: var(--font-data);
   font-weight: 600;
-  margin: 0 0 0.4rem;
-  color: var(--accent);
+  font-size: 0.95rem;
+  margin: 0 0 0.5rem;
+  color: var(--redlight-sky);
+  letter-spacing: 0.02em;
 }
 
 .progress-track {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  height: 14px;
-  overflow: hidden;
+  display: flex;
+  gap: 2px;
+  height: 10px;
+}
+
+/* 20 discrete ticks (each worth 5%) rather than a smooth bar — a running
+   tally. Deliberately not a single filled div with a % background-size
+   pattern: that scales relative to the fill's own (shrinking) width, so
+   its stripes drift out of alignment with the track underneath as the
+   percentage changes. Independent tick elements sidestep that entirely. */
+.progress-tick {
+  flex: 1;
+  height: 100%;
+  background: var(--sky-line);
+  border-radius: 1px;
+  transition: background-color 0.3s ease;
+}
+
+.progress-tick-filled {
+  background: var(--redlight);
 }
 
 .progress-track.small {
-  height: 8px;
+  height: 7px;
   display: inline-block;
   width: 100px;
   vertical-align: middle;
   margin-right: 0.5rem;
+  background: var(--paper-line);
 }
 
-.progress-fill {
+.progress-track.small .progress-fill {
+  display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--accent-2), var(--accent));
-  border-radius: 999px;
+  background: var(--redlight);
   transition: width 0.3s ease;
 }
 
 .percent-label {
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  font-family: var(--font-data);
+  font-size: 0.8rem;
+  color: var(--sky-text-muted);
 }
 
-/* ---------- Object grid / cards ---------- */
+.leaderboard-table .percent-label {
+  color: var(--ink-muted);
+}
+
+/* ---------- Dashboard controls ---------- */
+
+.dashboard-controls {
+  margin-bottom: 1.1rem;
+}
+
+.toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--sky-line);
+  border-radius: 999px;
+  font-family: var(--font-data);
+  font-size: 0.78rem;
+  color: var(--sky-text);
+  user-select: none;
+}
+
+.toggle-btn:hover {
+  border-color: var(--redlight);
+}
+
+.toggle-input:focus-visible + .toggle-btn {
+  outline: 2px solid var(--redlight-sky);
+  outline-offset: 2px;
+}
+
+.toggle-label-hide {
+  display: none;
+}
+
+.toggle-input:checked + .toggle-btn .toggle-label-show {
+  display: none;
+}
+
+.toggle-input:checked + .toggle-btn .toggle-label-hide {
+  display: inline;
+}
+
+/* Pure CSS show/hide, no JS: the checkbox lives in the document body, so
+   :has() reaches it from anywhere to hide already-captured cards. */
+body:has(#hide-captured:checked) .object-card.is-captured {
+  display: none;
+}
+
+/* ---------- Object grid / log-entry cards ---------- */
 
 .object-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 0.9rem;
+  gap: 1rem;
 }
 
 .object-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0.9rem;
+  background: var(--paper);
+  color: var(--ink);
+  border-left: 3px solid var(--brass);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 0.85rem 0.9rem;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  box-shadow: var(--shadow);
+  position: relative;
 }
 
 .object-card.is-captured {
-  border-color: var(--success);
-  background: linear-gradient(180deg, var(--success-bg), var(--bg-card) 40%);
+  border-left-color: var(--phosphor);
 }
 
 .object-card-header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  padding-bottom: 0.4rem;
+  border-bottom: 1px dashed var(--paper-line);
+  margin-bottom: 0.15rem;
 }
 
 .object-designation {
+  font-family: var(--font-data);
   font-weight: 700;
-  color: var(--accent);
+  color: var(--redlight-paper);
   font-size: 0.95rem;
 }
 
+.object-type {
+  font-family: var(--font-data);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 0.68rem;
+}
+
 .object-name {
+  font-family: var(--font-display);
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.05rem;
+  color: var(--ink);
 }
 
 .object-constellation {
   margin: 0;
-  color: var(--text-muted);
-  font-size: 0.85rem;
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+  font-style: italic;
 }
 
 .object-link {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 600;
   align-self: flex-start;
+  color: var(--redlight-paper);
 }
 
 .captured-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  color: var(--success);
-  font-weight: 600;
-  font-size: 0.9rem;
-  margin-top: 0.3rem;
-}
-
-.check-icon {
-  display: inline-block;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  align-self: flex-start;
+  color: var(--phosphor-paper);
+  border: 2px solid var(--phosphor-paper);
+  border-radius: 3px;
+  font-family: var(--font-data);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transform: rotate(-3deg);
+  margin: 0.15rem 0;
 }
 
 .capture-type-tag {
-  background: var(--success-bg);
-  border-radius: 4px;
-  padding: 0.05rem 0.4rem;
-  font-size: 0.75rem;
-  text-transform: capitalize;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: lowercase;
 }
 
 .observation-meta {
   margin: 0;
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-family: var(--font-data);
+  font-size: 0.78rem;
+  color: var(--ink-muted);
 }
 
 .observation-notes {
   margin: 0;
   font-size: 0.85rem;
-  color: var(--text);
+  color: var(--ink);
   white-space: pre-wrap;
 }
 
@@ -432,49 +659,111 @@ fieldset.capture-type-choice label {
   width: 100%;
   max-height: 140px;
   object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid var(--border);
+  border-radius: 2px;
+  border: 1px solid var(--paper-line);
 }
 
 .observation-thumb-small {
   width: 60px;
   height: 60px;
   object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid var(--border);
+  border-radius: 2px;
+  border: 1px solid var(--paper-line);
 }
 
 .observation-form {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  margin-top: 0.4rem;
-  border-top: 1px solid var(--border);
-  padding-top: 0.6rem;
+  margin-top: 0.2rem;
+  padding-top: 0.3rem;
 }
 
-/* ---------- Tables ---------- */
+/* ---------- Visibility dial (signature element) ---------- */
+
+.visibility-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.1rem 0;
+}
+
+.visibility-dial {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+}
+
+.visibility-strip-large .visibility-dial {
+  width: 9rem;
+  height: 9rem;
+}
+
+.month-cell {
+  fill: var(--paper-alt);
+  stroke: var(--paper-line);
+  stroke-width: 1;
+}
+
+.object-card .month-cell {
+  fill: var(--paper-alt);
+  stroke: var(--brass);
+}
+
+.visibility-strip-large .month-cell {
+  fill: var(--sky-deep);
+  stroke: var(--sky-line);
+}
+
+.month-visible {
+  fill: var(--redlight) !important;
+  stroke: var(--redlight-dim) !important;
+}
+
+.month-label {
+  font-family: var(--font-data);
+  font-size: 7px;
+  fill: var(--sky-text-muted);
+}
+
+.month-label-visible {
+  fill: var(--redlight);
+  font-weight: 700;
+}
+
+/* ---------- Tables (ledger) ---------- */
 
 .table-wrap {
   overflow-x: auto;
-  border: 1px solid var(--border);
+  background: var(--paper);
   border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   min-width: 480px;
+  color: var(--ink);
 }
 
 thead {
-  background: var(--bg-alt);
+  border-bottom: 2px solid var(--ink);
+}
+
+thead th {
+  font-family: var(--font-data);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+  font-weight: 600;
 }
 
 th, td {
   text-align: left;
-  padding: 0.6rem 0.8rem;
-  border-bottom: 1px solid var(--border);
+  padding: 0.65rem 0.8rem;
+  border-bottom: 1px solid var(--paper-line);
   font-size: 0.9rem;
 }
 
@@ -483,33 +772,41 @@ tbody tr:last-child td {
 }
 
 tbody tr:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.03);
 }
 
 .rank-cell {
+  font-family: var(--font-data);
   font-weight: 700;
-  color: var(--accent);
+  color: var(--redlight-paper);
+}
+
+.leaderboard-table td:nth-child(3) {
+  font-family: var(--font-data);
 }
 
 .badge {
   display: inline-block;
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 0.15rem 0.65rem;
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--paper-line);
+  border-radius: 2px;
+  padding: 0.1rem 0.5rem;
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink-muted);
   margin-right: 0.4rem;
 }
 
 .badge-photo {
-  border-color: var(--accent-2);
-  color: var(--accent-2);
+  border-color: var(--redlight-paper);
+  color: var(--redlight-paper);
 }
 
 .badge-visuel {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--brass);
+  color: var(--ink-muted);
 }
 
 .filter-chips {
@@ -523,28 +820,29 @@ tbody tr:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+  background: transparent;
+  border: 1px solid var(--sky-line);
   border-radius: 999px;
-  padding: 0.35rem 0.85rem;
-  font-size: 0.85rem;
-  color: var(--text);
+  padding: 0.3rem 0.8rem;
+  font-family: var(--font-data);
+  font-size: 0.78rem;
+  color: var(--sky-text);
 }
 
 .chip:hover {
-  border-color: var(--accent-2);
+  border-color: var(--redlight);
   text-decoration: none;
 }
 
 .chip-active {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--success-bg);
+  border-color: var(--redlight);
+  color: var(--redlight-sky);
+  background: var(--redlight-bg);
 }
 
 .chip-count {
-  color: var(--text-muted);
-  font-size: 0.75rem;
+  color: var(--sky-text-muted);
+  font-size: 0.72rem;
 }
 
 .chip-active .chip-count {
@@ -552,38 +850,14 @@ tbody tr:hover {
   opacity: 0.8;
 }
 
-.visibility-strip {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 2px;
-  margin: 0.2rem 0;
-}
-
-.month-cell {
-  flex: 1;
-  text-align: center;
-  font-size: 0.6rem;
-  color: var(--text-muted);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  padding: 0.15rem 0;
-}
-
-.month-visible {
-  color: var(--bg);
-  background: var(--accent);
-  border-color: var(--accent);
-  font-weight: 600;
-}
-
 .catalogue-card {
   text-decoration: none;
-  transition: border-color 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .catalogue-card:hover {
-  border-color: var(--accent-2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
   text-decoration: none;
 }
 
@@ -596,7 +870,10 @@ tbody tr:hover {
 .back-link {
   display: inline-block;
   margin-bottom: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-family: var(--font-data);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .objet-header {
@@ -607,8 +884,12 @@ tbody tr:hover {
   margin: 0.4rem 0;
 }
 
+.visibility-label {
+  margin-top: 0.75rem;
+}
+
 .objet-description {
-  color: var(--text-muted);
+  color: var(--sky-text-muted);
   max-width: 60ch;
 }
 
@@ -616,6 +897,10 @@ tbody tr:hover {
 
 .admin-section {
   margin-bottom: 2rem;
+}
+
+.admin-section h2 {
+  font-size: 1.1rem;
 }
 
 /* ---------- Responsive ---------- */
@@ -638,23 +923,16 @@ tbody tr:hover {
   .inline-form.small input {
     width: 100%;
   }
+
+  .visibility-strip-large .visibility-dial {
+    width: 7rem;
+    height: 7rem;
+  }
 }
 
-/* Light-theme override, in case the viewer forces light mode */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #f5f6fb;
-    --bg-alt: #ffffff;
-    --bg-card: #ffffff;
-    --border: #d8dcec;
-    --text: #1a1d2e;
-    --text-muted: #565d7a;
-    --accent: #b3860b;
-    --accent-2: #2f6fce;
-    --success: #1d8f5e;
-    --success-bg: rgba(29, 143, 94, 0.08);
-    --danger: #c62f4c;
-    --danger-bg: rgba(198, 47, 76, 0.08);
-    --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+@media (prefers-reduced-motion: reduce) {
+  .progress-tick,
+  .catalogue-card {
+    transition: none;
   }
 }

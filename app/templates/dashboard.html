@@ -7,6 +7,14 @@
 
 {{ progress.progress_bar(progress_count, progress_percent) }}
 
+<div class="dashboard-controls">
+  <input type="checkbox" id="hide-captured" class="visually-hidden toggle-input">
+  <label for="hide-captured" class="toggle-btn">
+    <span class="toggle-label-show">Masquer les objets capturés</span>
+    <span class="toggle-label-hide">Afficher tous les objets</span>
+  </label>
+</div>
+
 <div class="object-grid">
   {% for objet in objets %}
     {{ cards.object_card(objet, observations_by_objet_id.get(objet.id), groupe) }}

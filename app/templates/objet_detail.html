@@ -13,8 +13,8 @@
   {% if objet.description %}
     <p class="objet-description">{{ objet.description }}</p>
   {% endif %}
-  <p class="field-label" style="margin-top: 0.75rem;">Visibilité depuis Fribourg</p>
-  {{ visibility.visibility_strip(objet.mois_visibles_list) }}
+  <p class="field-label visibility-label">Visibilité depuis Fribourg</p>
+  {{ visibility.visibility_strip(objet.mois_visibles_list, large=True) }}
 </div>
 
 <h2>Observations ({{ observations|length }})</h2>
@@ -38,6 +38,6 @@
   </table>
 </div>
 {% else %}
-<p>Aucune observation enregistrée pour cet objet pour l'instant.</p>
+<p>Aucun groupe n'a encore observé cet objet cette année.</p>
 {% endif %}
 {% endblock %}
